@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class EventPostSendService {
+public class EventPostGetService {
     private final JpaRepository<EventPost, Long> repository;
 
-    public EventPostSendService(JpaRepository<EventPost, Long> repository) {
+    public EventPostGetService(JpaRepository<EventPost, Long> repository) {
         this.repository = repository;
     }
 

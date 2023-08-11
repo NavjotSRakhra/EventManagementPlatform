@@ -1,5 +1,6 @@
 package io.github.navjotsrakhra.eventmanager.dataModel;
 
+import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,9 +25,9 @@ public class EventPost {
     @NotBlank(message = "Location is mandatory")
     private String location;
     @NotNull(message = "Start day is mandatory")
-    private LocalDate eventStartDay;
+    private LocalDate startDay;
     @NotNull(message = "End day is mandatory")
-    private LocalDate eventEndDay;
+    private LocalDate endDay;
     @NotNull(message = "Start time is mandatory")
     private LocalTime startTime;
     @NotNull(message = "End time is mandatory")
@@ -35,12 +36,12 @@ public class EventPost {
     public EventPost() {
     }
 
-    public EventPost(String title, String content, String location, LocalDate eventStartDay, LocalDate eventEndDay, LocalTime startTime, LocalTime endTime) {
+    public EventPost(String title, String content, String location, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
         this.title = title;
         this.content = content;
         this.location = location;
-        this.eventStartDay = eventStartDay;
-        this.eventEndDay = eventEndDay;
+        this.startDay = startDay;
+        this.endDay = endDay;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -69,27 +70,33 @@ public class EventPost {
         this.location = location;
     }
 
-    public LocalDate getEventStartDay() {
-        return eventStartDay;
+    public LocalDate getStartDay() {
+        return startDay;
     }
 
-    public void setEventStartDay(LocalDate eventStartDay) {
-        this.eventStartDay = eventStartDay;
+    public void setStartDay(LocalDate startDay) throws DateValidationFailedException {
+        if (endDay != null && startDay.isAfter(endDay))
+            throw new DateValidationFailedException("Start date must be on or before end day");
+        this.startDay = startDay;
     }
 
-    public LocalDate getEventEndDay() {
-        return eventEndDay;
+    public LocalDate getEndDay() {
+        return endDay;
     }
 
-    public void setEventEndDay(LocalDate eventEndDay) {
-        this.eventEndDay = eventEndDay;
+    public void setEndDay(LocalDate endDay) throws DateValidationFailedException {
+        if (startDay != null && startDay.isAfter(endDay))
+            throw new DateValidationFailedException("Start date must be on or before end day");
+        this.endDay = endDay;
     }
 
     public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalTime startTime) throws DateValidationFailedException {
+        if (endTime != null && startTime.isAfter(endTime))
+            throw new DateValidationFailedException("Start time must be on or before end time");
         this.startTime = startTime;
     }
 
@@ -97,7 +104,9 @@ public class EventPost {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalTime endTime) throws DateValidationFailedException {
+        if (startTime != null && !startTime.isBefore(endTime))
+            throw new DateValidationFailedException("Start time must be  before end time");
         this.endTime = endTime;
     }
 

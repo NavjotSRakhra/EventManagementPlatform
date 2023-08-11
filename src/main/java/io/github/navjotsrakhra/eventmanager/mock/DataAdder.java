@@ -1,12 +1,8 @@
 package io.github.navjotsrakhra.eventmanager.mock;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
 import io.github.navjotsrakhra.eventmanager.repository.EventPostRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Component
 public class DataAdder implements CommandLineRunner {
@@ -20,8 +16,7 @@ public class DataAdder implements CommandLineRunner {
     public void run(String... args) throws Exception {
         for (int i = 0; i < 10; i++) {
             i++;
-            System.out.println(LocalTime.now());
-            repository.save(new EventPost("test", "test " + i, "tt " + i, LocalDate.now(), LocalDate.now(), LocalTime.of(10, 10), LocalTime.of(10, 10)));
+//            repository.save(new EventPost("test", "test " + i, "tt " + i, LocalDate.now(), LocalDate.now(), LocalTime.of(10, 10), LocalTime.of(10, 10)));
             i--;
         }
     }
