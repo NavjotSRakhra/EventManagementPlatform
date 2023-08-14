@@ -5,4 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.dataModel;
 
 public enum Role {
+    ADMIN,
+    MANAGEMENT,
+    USER
 }
