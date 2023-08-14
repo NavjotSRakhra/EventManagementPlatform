@@ -12,13 +12,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Configuration
+
 public class UserConfig {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return username -> {
             UserObject userObject = userRepository.findByUsername(username);
             if (userObject == null) throw new UsernameNotFoundException("Username: " + username + " not found.");
-
+            System.out.println(userObject);
+            System.out.println(userObject.getAuthorities());
             return userObject;
         };
     }
