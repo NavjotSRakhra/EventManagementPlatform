@@ -4,8 +4,8 @@
 
 package io.github.navjotsrakhra.eventmanager.exception;
 
-public class DateValidationFailedException extends Exception {
-    public DateValidationFailedException(String s) {
-        super(s);
+public class UserNameTakenException extends Exception {
+    public UserNameTakenException() {
+        super("Username already taken");
     }
 }
