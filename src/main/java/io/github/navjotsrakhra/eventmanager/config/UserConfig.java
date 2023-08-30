@@ -19,8 +19,6 @@ public class UserConfig {
         return username -> {
             UserObject userObject = userRepository.findByUsername(username);
             if (userObject == null) throw new UsernameNotFoundException("Username: " + username + " not found.");
-            System.out.println(userObject);
-            System.out.println(userObject.getAuthorities());
             return userObject;
         };
     }
