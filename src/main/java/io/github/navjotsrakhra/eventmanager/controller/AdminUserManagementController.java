@@ -15,11 +15,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class UserManagementController {
+public class AdminUserManagementController {
 
     private final UserManagementService userManagementService;
 
-    public UserManagementController(UserManagementService userManagementService) {
+    public AdminUserManagementController(UserManagementService userManagementService) {
         this.userManagementService = userManagementService;
     }
 
