@@ -12,6 +12,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -36,8 +37,10 @@ public class EventPost {
     private LocalTime startTime;
     @NotNull(message = "End time is mandatory")
     private LocalTime endTime;
+    private LocalDateTime postedAt;
 
     public EventPost() {
+        this.postedAt = LocalDateTime.now();
     }
 
     public EventPost(String title, String content, String location, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
@@ -48,6 +51,7 @@ public class EventPost {
         this.endDay = endDay;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.postedAt = LocalDateTime.now();
     }
 
     public String getTitle() {

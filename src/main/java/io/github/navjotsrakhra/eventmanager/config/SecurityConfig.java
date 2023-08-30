@@ -27,6 +27,7 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
+                        .requestMatchers("/admin/**").hasAuthority(Role.ADMIN.name())
                         .requestMatchers("/events/post").hasAnyAuthority(Role.ADMIN.name(), Role.MANAGEMENT.name())
                         .requestMatchers("/events", "/login", "register").permitAll()
                         .anyRequest().authenticated())
