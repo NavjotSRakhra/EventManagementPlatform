@@ -5,8 +5,8 @@
 package io.github.navjotsrakhra.eventmanager.repository;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
-public interface UserRepository extends CrudRepository<UserObject, Long> {
+public interface UserRepository extends ListCrudRepository<UserObject, Long> {
     UserObject findByUsername(String username);
 }

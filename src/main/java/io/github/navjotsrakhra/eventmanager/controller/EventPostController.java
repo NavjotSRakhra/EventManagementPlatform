@@ -31,7 +31,7 @@ public class EventPostController {
 
     @GetMapping
     public ResponseEntity<List<EventPost>> getAllEvents() {
-        return ResponseEntity.ok(eventPostGetService.getAllPosts());
+        return eventPostGetService.getAllPosts();
     }
 
     @PostMapping("/post")
