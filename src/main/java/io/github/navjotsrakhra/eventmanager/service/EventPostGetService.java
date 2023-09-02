@@ -1,25 +1,46 @@
 /*
- * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved
+ * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
 package io.github.navjotsrakhra.eventmanager.service;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
+import io.github.navjotsrakhra.eventmanager.dataModel.exposed.EventPostRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The EventPostGetService class provides methods for retrieving EventPost entities from the repository.
+ */
 @Service
 public class EventPostGetService {
     private final JpaRepository<EventPost, Long> repository;
 
+    /**
+     * Constructor for the EventPostGetService class.
+     *
+     * @param repository The JpaRepository used for retrieving event posts.
+     */
     public EventPostGetService(JpaRepository<EventPost, Long> repository) {
         this.repository = repository;
     }
 
-    public ResponseEntity<List<EventPost>> getAllPosts() {
-        return ResponseEntity.ok(repository.findAll());
+    /**
+     * Get a list of all event posts.
+     *
+     * @return ResponseEntity containing a list of EventPostRecord objects.
+     */
+    public ResponseEntity<List<EventPostRecord>> getAllPosts() {
+        return ResponseEntity.ok(
+                repository
+                        .findAll()
+                        .stream()
+                        .map(
+                                e -> new EventPostRecord(e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
+                        .toList()
+        );
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved
+ * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
 package io.github.navjotsrakhra.eventmanager.controller;
@@ -13,15 +13,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 
+/**
+ * The UserSettingsController class handles HTTP requests related to user settings.
+ */
 @Controller
 @RequestMapping("/settings/user")
 public class UserSettingsController {
     private final UserSettingsService userSettingsService;
 
+    /**
+     * Constructor for the UserSettingsController class.
+     *
+     * @param userSettingsService Service for user settings.
+     */
     public UserSettingsController(UserSettingsService userSettingsService) {
         this.userSettingsService = userSettingsService;
     }
 
+    /**
+     * Handles POST requests for the "/settings/user/password" URL to change the user's password.
+     *
+     * @param newPassword The new password as a String.
+     * @param principal   Represents the currently authenticated user.
+     * @return ResponseEntity indicating the result of the password change operation.
+     */
     @PostMapping("/password")
     public ResponseEntity<?> changePassword(@RequestBody String newPassword, Principal principal) {
         return userSettingsService.changePassword(principal, newPassword);

@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved
+ * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
 package io.github.navjotsrakhra.eventmanager.service;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.Role;
-import io.github.navjotsrakhra.eventmanager.dataModel.UserManagementData;
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
+import io.github.navjotsrakhra.eventmanager.dataModel.exposed.UserData;
 import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.http.HttpStatus;
@@ -16,18 +16,38 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The UserManagementService class provides methods for managing user-related operations.
+ */
 @Service
 public class UserManagementService {
     private final ListCrudRepository<UserObject, Long> userRepository;
 
+    /**
+     * Constructor for the UserManagementService class.
+     *
+     * @param userRepository The UserRepository used for managing user data.
+     */
     public UserManagementService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<List<UserManagementData>> getAllUsers() {
-        return ResponseEntity.ok(userRepository.findAll().stream().map(e -> new UserManagementData(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())).toList());
+    /**
+     * Get a list of all users.
+     *
+     * @return ResponseEntity containing a list of UserData objects representing users.
+     */
+    public ResponseEntity<List<UserData>> getAllUsers() {
+        return ResponseEntity.ok(userRepository.findAll().stream().map(e -> new UserData(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())).toList());
     }
 
+    /**
+     * Update the roles of a user with the specified ID.
+     *
+     * @param id           The ID of the user to be updated.
+     * @param updatedRoles The updated list of roles for the user.
+     * @return ResponseEntity indicating the result of the operation.
+     */
     public ResponseEntity<Boolean> updateUserRoles(Long id, List<Role> updatedRoles) {
 
         Optional<UserObject> userToBeUpdated = userRepository.findById(id);
