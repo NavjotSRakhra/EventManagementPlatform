@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved
+ * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
 package io.github.navjotsrakhra.eventmanager.service;
@@ -17,22 +17,38 @@ import java.net.URI;
 import java.security.Principal;
 import java.util.Optional;
 
+/**
+ * The UserSettingsService class provides methods for managing user settings, including password changes.
+ */
 @Service
 public class UserSettingsService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
 
+    /**
+     * Constructor for the UserSettingsService class.
+     *
+     * @param repository The UserRepository used for managing user data.
+     * @param encoder    The PasswordEncoder used for encoding user passwords.
+     */
     public UserSettingsService(UserRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
         this.encoder = encoder;
     }
 
-    private static HttpHeaders redirectToHeader(CharSequence path) {
+    private static HttpHeaders redirectionHeader(CharSequence path) {
         HttpHeaders header = new HttpHeaders();
         header.setLocation(URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString() + path));
         return header;
     }
 
+    /**
+     * Change the password for the currently logged-in user.
+     *
+     * @param principal   The Principal object representing the currently logged-in user.
+     * @param newPassword The new password to be set for the user.
+     * @return ResponseEntity indicating the result of the password change operation.
+     */
     public ResponseEntity<?> changePassword(Principal principal, String newPassword) {
         Optional<UserObject> user = Optional.ofNullable(repository.findByUsername(principal.getName()));
         if (user.isEmpty() || newPassword == null || newPassword.isEmpty())
@@ -41,6 +57,6 @@ public class UserSettingsService {
         user.get().setPassword(encoder.encode(newPassword));
         repository.save(user.get());
 
-        return new ResponseEntity<>(redirectToHeader("/logout"), HttpStatus.SEE_OTHER);
+        return new ResponseEntity<>(redirectionHeader("/logout"), HttpStatus.SEE_OTHER);
     }
 }
