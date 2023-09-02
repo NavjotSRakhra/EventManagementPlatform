@@ -6,17 +6,17 @@ package io.github.navjotsrakhra.eventmanager.controller;
 
 import io.github.navjotsrakhra.eventmanager.service.UserSettingsService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
 /**
  * The UserSettingsController class handles HTTP requests related to user settings.
  */
-@Controller
+@RestController
 @RequestMapping("/settings/user")
 public class UserSettingsController {
     private final UserSettingsService userSettingsService;

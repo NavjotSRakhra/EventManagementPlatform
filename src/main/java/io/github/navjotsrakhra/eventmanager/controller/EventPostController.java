@@ -11,7 +11,6 @@ import io.github.navjotsrakhra.eventmanager.service.EventPostAddService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,7 @@ import java.util.List;
 /**
  * The EventPostController class handles HTTP requests related to event posts.
  */
-@Controller
+@RestController
 @RequestMapping("/events")
 public class EventPostController {
     private final EventPostGetService eventPostGetService;

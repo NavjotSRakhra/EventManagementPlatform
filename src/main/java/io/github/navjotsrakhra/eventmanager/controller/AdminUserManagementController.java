@@ -8,7 +8,6 @@ import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.dataModel.exposed.UserData;
 import io.github.navjotsrakhra.eventmanager.service.UserManagementService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 /**
  * The AdminUserManagementController class handles HTTP requests related to user management in the admin panel.
  */
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminUserManagementController {
 
