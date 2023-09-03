@@ -31,7 +31,7 @@ public class RegistrationController {
     /**
      * Handles POST requests for the "/register" URL to register a new user.
      *
-     * @param registrationForm The RegistrationForm object containing user registration information.
+     * @param registrationForm The RegistrationForm object containing user registration information. Specifically username and password
      * @return A String representing the registration result.
      * @throws UserNameTakenException if the username is already taken.
      */

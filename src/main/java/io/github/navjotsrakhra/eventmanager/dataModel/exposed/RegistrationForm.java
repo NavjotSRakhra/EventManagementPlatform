@@ -6,20 +6,14 @@ package io.github.navjotsrakhra.eventmanager.dataModel.exposed;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
-import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
 /**
- * The RegistrationForm class represents a user registration form containing username, password, and roles.
+ * The RegistrationForm class represents a user registration form containing username and password
  */
-@Data
-public class RegistrationForm {
-    private final String username;
-    private final String password;
-    private List<Role> roles;
-
+public record RegistrationForm(String username, String password) {
     /**
      * Converts this RegistrationForm to a UserObject.
      *
