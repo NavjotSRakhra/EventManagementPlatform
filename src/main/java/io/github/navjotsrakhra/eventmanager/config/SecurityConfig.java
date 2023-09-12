@@ -44,12 +44,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/admin/**").hasAuthority(Role.ADMIN.name())
                         .requestMatchers("/events/post").hasAnyAuthority(Role.ADMIN.name(), Role.MANAGEMENT.name())
-                        .requestMatchers("/events", "/login", "/register").permitAll()
+                        .requestMatchers("/events", "/login", "/register", "/actuator/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login")
+                        .loginProcessingUrl("/login")
                         .permitAll()
-                        .defaultSuccessUrl("/"))
+                        .defaultSuccessUrl("/events"))
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
                         .deleteCookies("JSESSIONID"));
 

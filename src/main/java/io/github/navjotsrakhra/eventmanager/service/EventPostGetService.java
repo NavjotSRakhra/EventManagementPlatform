@@ -39,7 +39,7 @@ public class EventPostGetService {
                         .findAll()
                         .stream()
                         .map(
-                                e -> new EventPostRecord(e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
+                                e -> new EventPostRecord(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
                         .toList()
         );
     }
