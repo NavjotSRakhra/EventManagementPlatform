@@ -161,4 +161,7 @@ public class EventPost {
         this.endTime = endTime;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

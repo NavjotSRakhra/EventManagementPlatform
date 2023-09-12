@@ -13,7 +13,8 @@ import java.time.LocalTime;
 /**
  * The EventPostRecord class represents an exposed version of an EventPost, providing a simplified interface for creating event posts.
  */
-public record EventPostRecord(String title, String content, String location, LocalDate startDay, LocalDate endDay,
+public record EventPostRecord(Long ID, String title, String content, String location, LocalDate startDay,
+                              LocalDate endDay,
                               LocalTime startTime, LocalTime endTime) {
     /**
      * Converts this EventPostRecord to an EventPost object.
