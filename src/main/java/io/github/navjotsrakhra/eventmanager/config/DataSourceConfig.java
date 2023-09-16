@@ -10,8 +10,16 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
+/**
+ * The DataSourceConfig class is responsible for configuring the data source for the application.
+ */
 @Configuration
 public class DataSourceConfig {
+    /**
+     * Configure the data source for the application.
+     *
+     * @return A DataSource for the application.
+     */
     @Bean
     public DataSource getDataSource() {
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();

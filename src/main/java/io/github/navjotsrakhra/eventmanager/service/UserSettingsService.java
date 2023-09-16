@@ -36,6 +36,12 @@ public class UserSettingsService {
         this.encoder = encoder;
     }
 
+    /**
+     * Get the HttpHeaders required for redirection after a password change.
+     *
+     * @param path The path to redirect to.
+     * @return The HttpHeaders required for redirection.
+     */
     private static HttpHeaders redirectionHeader(CharSequence path) {
         HttpHeaders header = new HttpHeaders();
         header.setLocation(URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString() + path));
