@@ -6,6 +6,8 @@ package io.github.navjotsrakhra.eventmanager.service;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
 import io.github.navjotsrakhra.eventmanager.dataModel.exposed.EventPostRecord;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,9 @@ public class EventPostGetService {
      * Get a list of all event posts.
      *
      * @return ResponseEntity containing a list of EventPostRecord objects.
+     * @deprecated Use {@link #getPostsWithPagination(Pageable)} instead.
      */
+    @Deprecated
     public ResponseEntity<List<EventPostRecord>> getAllPosts() {
         return ResponseEntity.ok(
                 repository
@@ -41,6 +45,21 @@ public class EventPostGetService {
                         .map(
                                 e -> new EventPostRecord(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
                         .toList()
+        );
+    }
+
+    /**
+     * Get a list of all event posts with pagination. See {@link Pageable}. Defaults to page 0, size 5, sorted by postedAt.
+     *
+     * @param pageable The pagination object. See {@link Pageable}.
+     * @return ResponseEntity containing a list of EventPostRecord objects.
+     */
+    public ResponseEntity<Page<EventPostRecord>> getPostsWithPagination(Pageable pageable) {
+        return ResponseEntity.ok(
+                repository
+                        .findAll(pageable)
+                        .map(
+                                e -> new EventPostRecord(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
         );
     }
 }

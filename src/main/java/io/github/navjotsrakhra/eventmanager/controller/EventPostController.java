@@ -11,6 +11,9 @@ import io.github.navjotsrakhra.eventmanager.exception.PostNotFoundException;
 import io.github.navjotsrakhra.eventmanager.service.EventPostAddService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostEditService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,17 +46,20 @@ public class EventPostController {
     }
 
     /**
-     * Handles GET requests for the "/events" URL and returns a list of all event posts.
+     * Handles GET requests for the "/events" URL and retrieves a list of all event posts.
+     * {@link EventPostRecord} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}.
      *
+     * @param pagination The pagination object. See {@link Pageable}. Defaults to page 0, size 5, sorted by postedAt.
      * @return ResponseEntity containing a list of EventPostRecord objects.
      */
     @GetMapping
-    public ResponseEntity<List<EventPostRecord>> getAllEvents() {
-        return eventPostGetService.getAllPosts();
+    public ResponseEntity<Page<EventPostRecord>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt") Pageable pagination) {
+        return eventPostGetService.getPostsWithPagination(pagination);
     }
 
     /**
-     * Handles POST requests for the "/events/post" URL to add a new event post. {@link EventPostRecord} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
+     * Handles POST requests for the "/events/post" URL to add a new event post.
+     * {@link EventPostRecord} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
      *
      * @param newEvent The EventPostRecord object to be added, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost)}.
      * @return ResponseEntity indicating the result of the operation.
