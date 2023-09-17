@@ -13,6 +13,7 @@ import io.github.navjotsrakhra.eventmanager.service.EventPostEditService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,7 @@ public class EventPostController {
      * @return ResponseEntity containing a list of EventPostRecord objects.
      */
     @GetMapping
-    public ResponseEntity<Page<EventPostRecord>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt") Pageable pagination) {
+    public ResponseEntity<Page<EventPostRecord>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination) {
         return eventPostGetService.getPostsWithPagination(pagination);
     }
 
