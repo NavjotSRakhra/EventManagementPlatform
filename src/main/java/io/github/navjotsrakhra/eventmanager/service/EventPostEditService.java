@@ -59,4 +59,19 @@ public class EventPostEditService {
         }
         throw new PostNotFoundException();
     }
+
+    /**
+     * Deletes an existing event post with the specified ID.
+     *
+     * @param ID The ID of the event post to delete.
+     * @return A ResponseEntity containing no content if the deletion is successful.
+     */
+    public ResponseEntity<?> deletePostById(Long ID) {
+        Optional<EventPost> post = repository.findById(ID);
+        if (post.isPresent()) {
+            repository.deleteById(ID);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+
 /**
  * The EventPostAddService class provides methods for adding new EventPost entities to the repository.
  */
@@ -27,12 +29,14 @@ public class EventPostAddService {
     }
 
     /**
-     * Add a new event post to the repository.
+     * Add a new event post to the repository. The postedBy field is set to the username of the currently logged-in user.
      *
-     * @param event The EventPost object to be added, validated using the @Valid annotation.
+     * @param event     The EventPost object to be added, validated using the @Valid annotation.
+     * @param principal The Principal object containing the username of the user making the request.
      * @return ResponseEntity indicating the result of the operation.
      */
-    public ResponseEntity<?> addEvent(@Valid EventPost event) {
+    public ResponseEntity<?> addEvent(@Valid EventPost event, Principal principal) {
+        event.setPostedBy(principal.getName());
         repository.save(event);
         return ResponseEntity
                 .ok()

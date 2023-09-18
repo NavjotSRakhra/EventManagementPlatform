@@ -20,11 +20,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The EventPostController class handles HTTP requests related to event posts.
+ *
+ * @author Navjot Singh Rakhra
+ * @version 1.0
  */
 @RestController
 @RequestMapping("/events")
@@ -62,19 +66,20 @@ public class EventPostController {
      * Handles POST requests for the "/events/post" URL to add a new event post.
      * {@link EventPostDTO} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
      *
-     * @param newEvent The EventPostDTO object to be added, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost)}.
+     * @param newEvent  The EventPostDTO object to be added, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost, Principal)}.
+     * @param principal The Principal object is used to retrieve the username of the user making the request.
      * @return ResponseEntity indicating the result of the operation.
      * @throws DateValidationFailedException if date validation fails.
      */
     @PostMapping("/post")
-    public ResponseEntity<?> addEvent(@RequestBody EventPostDTO newEvent) throws DateValidationFailedException {
-        return eventPostAddService.addEvent(newEvent.toEventPost());
+    public ResponseEntity<?> addEvent(@RequestBody EventPostDTO newEvent, Principal principal) throws DateValidationFailedException {
+        return eventPostAddService.addEvent(newEvent.toEventPost(), principal);
     }
 
     /**
      * Handles POST requests for the "/events/edit" URL to add a new event post. {@link EventPostDTO} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
      *
-     * @param editedEvent The EventPostDTO object to be edited, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost)}.
+     * @param editedEvent The EventPostDTO object to be edited, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost, Principal)}.
      * @return ResponseEntity indicating the result of the operation.
      * @throws DateValidationFailedException if date validation fails.
      * @throws PostNotFoundException         if Post with given id is not found in the database.
@@ -82,6 +87,17 @@ public class EventPostController {
     @PostMapping("/edit/{ID}")
     public ResponseEntity<?> editEvent(@PathVariable Long ID, @RequestBody EventPostDTO editedEvent) throws PostNotFoundException, DateValidationFailedException {
         return eventPostEditService.updatePostById(ID, editedEvent.toEventPost());
+    }
+
+    /**
+     * Handles DELETE requests for the "/events/delete/{ID}" URL to delete an event post.
+     *
+     * @param ID The ID of the event post to delete.
+     * @return ResponseEntity indicating the result of the operation.
+     */
+    @DeleteMapping("/delete/{ID}")
+    public ResponseEntity<?> deleteEvent(@PathVariable Long ID) {
+        return eventPostEditService.deletePostById(ID);
     }
 
     /**

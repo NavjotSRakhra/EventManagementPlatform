@@ -43,6 +43,9 @@ public class EventPost {
     private LocalTime startTime;
     @NotNull(message = "End time is mandatory")
     private LocalTime endTime;
+    @NotNull(message = "Posted by is mandatory")
+    @NotBlank
+    private String postedBy;
 
     /**
      * Default constructor initializes the 'postedAt' timestamp to the current date and time.
@@ -163,5 +166,13 @@ public class EventPost {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPostedBy() {
+        return postedBy;
+    }
+
+    public void setPostedBy(String postedBy) {
+        this.postedBy = postedBy;
     }
 }
