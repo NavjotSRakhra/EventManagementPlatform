@@ -5,7 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.service;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
-import io.github.navjotsrakhra.eventmanager.dataModel.exposed.EventPostRecord;
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
 import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
 import io.github.navjotsrakhra.eventmanager.exception.PostNotFoundException;
 import io.github.navjotsrakhra.eventmanager.repository.EventPostRepository;
@@ -54,7 +54,7 @@ public class EventPostEditService {
             repository.save(eventPost);
 
             return ResponseEntity
-                    .ok(new EventPostRecord(eventPost.getId(), eventPost.getTitle(), eventPost.getContent(), eventPost.getLocation(), eventPost.getStartDay(), eventPost.getEndDay(), eventPost.getStartTime(), eventPost.getEndTime()))
+                    .ok(new EventPostDTO(eventPost.getId(), eventPost.getTitle(), eventPost.getContent(), eventPost.getLocation(), eventPost.getStartDay(), eventPost.getEndDay(), eventPost.getStartTime(), eventPost.getEndTime()))
                     ;
         }
         throw new PostNotFoundException();

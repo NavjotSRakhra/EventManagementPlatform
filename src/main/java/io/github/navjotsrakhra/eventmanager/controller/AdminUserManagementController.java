@@ -5,7 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.controller;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.Role;
-import io.github.navjotsrakhra.eventmanager.dataModel.exposed.UserData;
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.UserDTO;
 import io.github.navjotsrakhra.eventmanager.service.UserManagementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +33,10 @@ public class AdminUserManagementController {
     /**
      * Handles GET requests for the "/admin/users" URL and retrieves a list of all users.
      *
-     * @return ResponseEntity containing a list of UserManagementData objects.
+     * @return ResponseEntity containing a list of UserDTO objects.
      */
     @GetMapping("/users")
-    public ResponseEntity<List<UserData>> getUsers() {
+    public ResponseEntity<List<UserDTO>> getUsers() {
         return userManagementService.getAllUsers();
     }
 

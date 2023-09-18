@@ -5,7 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.controller;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
-import io.github.navjotsrakhra.eventmanager.dataModel.exposed.EventPostRecord;
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
 import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
 import io.github.navjotsrakhra.eventmanager.exception.PostNotFoundException;
 import io.github.navjotsrakhra.eventmanager.service.EventPostAddService;
@@ -48,39 +48,39 @@ public class EventPostController {
 
     /**
      * Handles GET requests for the "/events" URL and retrieves a list of all event posts.
-     * {@link EventPostRecord} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}.
+     * {@link EventPostDTO} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}.
      *
      * @param pagination The pagination object. See {@link Pageable}. Defaults to page 0, size 5, sorted by postedAt.
-     * @return ResponseEntity containing a list of EventPostRecord objects.
+     * @return ResponseEntity containing a list of EventPostDTO objects.
      */
     @GetMapping
-    public ResponseEntity<Page<EventPostRecord>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination) {
+    public ResponseEntity<Page<EventPostDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination) {
         return eventPostGetService.getPostsWithPagination(pagination);
     }
 
     /**
      * Handles POST requests for the "/events/post" URL to add a new event post.
-     * {@link EventPostRecord} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
+     * {@link EventPostDTO} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
      *
-     * @param newEvent The EventPostRecord object to be added, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost)}.
+     * @param newEvent The EventPostDTO object to be added, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost)}.
      * @return ResponseEntity indicating the result of the operation.
      * @throws DateValidationFailedException if date validation fails.
      */
     @PostMapping("/post")
-    public ResponseEntity<?> addEvent(@RequestBody EventPostRecord newEvent) throws DateValidationFailedException {
+    public ResponseEntity<?> addEvent(@RequestBody EventPostDTO newEvent) throws DateValidationFailedException {
         return eventPostAddService.addEvent(newEvent.toEventPost());
     }
 
     /**
-     * Handles POST requests for the "/events/edit" URL to add a new event post. {@link EventPostRecord} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
+     * Handles POST requests for the "/events/edit" URL to add a new event post. {@link EventPostDTO} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
      *
-     * @param editedEvent The EventPostRecord object to be edited, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost)}.
+     * @param editedEvent The EventPostDTO object to be edited, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost)}.
      * @return ResponseEntity indicating the result of the operation.
      * @throws DateValidationFailedException if date validation fails.
      * @throws PostNotFoundException         if Post with given id is not found in the database.
      */
     @PostMapping("/edit/{ID}")
-    public ResponseEntity<?> editEvent(@PathVariable Long ID, @RequestBody EventPostRecord editedEvent) throws PostNotFoundException, DateValidationFailedException {
+    public ResponseEntity<?> editEvent(@PathVariable Long ID, @RequestBody EventPostDTO editedEvent) throws PostNotFoundException, DateValidationFailedException {
         return eventPostEditService.updatePostById(ID, editedEvent.toEventPost());
     }
 

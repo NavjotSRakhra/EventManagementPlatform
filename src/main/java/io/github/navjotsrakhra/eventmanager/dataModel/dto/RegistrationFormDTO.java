@@ -2,7 +2,7 @@
  * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
-package io.github.navjotsrakhra.eventmanager.dataModel.exposed;
+package io.github.navjotsrakhra.eventmanager.dataModel.dto;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
@@ -11,9 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
 /**
- * The RegistrationForm class represents a user registration form containing username and password.
+ * The RegistrationFormDTO class represents a user registration form containing username and password.
  */
-public record RegistrationForm(String username, String password) {
+public record RegistrationFormDTO(String username, String password) {
     /**
      * Converts this RegistrationForm to a UserObject.
      *

@@ -4,7 +4,7 @@
 
 package io.github.navjotsrakhra.eventmanager.controller;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.exposed.RegistrationForm;
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.RegistrationFormDTO;
 import io.github.navjotsrakhra.eventmanager.exception.UserNameTakenException;
 import io.github.navjotsrakhra.eventmanager.service.UserRegistrationService;
 import org.springframework.http.HttpStatus;
@@ -31,13 +31,13 @@ public class RegistrationController {
     /**
      * Handles POST requests for the "/register" URL to register a new user.
      *
-     * @param registrationForm The RegistrationForm object containing user registration information. Specifically username and password
+     * @param registrationFormDTO The RegistrationFormDTO object containing user registration information. Specifically username and password
      * @return A String representing the registration result.
      * @throws UserNameTakenException if the username is already taken.
      */
     @PostMapping
-    public String register(@RequestBody RegistrationForm registrationForm) throws UserNameTakenException {
-        return userRegistrationService.saveUserFromRegistrationFormWIthDefaultRole(registrationForm);
+    public String register(@RequestBody RegistrationFormDTO registrationFormDTO) throws UserNameTakenException {
+        return userRegistrationService.saveUserFromRegistrationFormWIthDefaultRole(registrationFormDTO);
     }
 
     /**

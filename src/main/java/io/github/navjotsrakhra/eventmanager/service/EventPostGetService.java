@@ -5,7 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.service;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
-import io.github.navjotsrakhra.eventmanager.dataModel.exposed.EventPostRecord;
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,17 +33,17 @@ public class EventPostGetService {
     /**
      * Get a list of all event posts.
      *
-     * @return ResponseEntity containing a list of EventPostRecord objects.
+     * @return ResponseEntity containing a list of EventPostDTO objects.
      * @deprecated Use {@link #getPostsWithPagination(Pageable)} instead.
      */
     @Deprecated
-    public ResponseEntity<List<EventPostRecord>> getAllPosts() {
+    public ResponseEntity<List<EventPostDTO>> getAllPosts() {
         return ResponseEntity.ok(
                 repository
                         .findAll()
                         .stream()
                         .map(
-                                e -> new EventPostRecord(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
+                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
                         .toList()
         );
     }
@@ -52,14 +52,14 @@ public class EventPostGetService {
      * Get a list of all event posts with pagination. See {@link Pageable}. Defaults to page 0, size 5, sorted by postedAt.
      *
      * @param pageable The pagination object. See {@link Pageable}.
-     * @return ResponseEntity containing a list of EventPostRecord objects.
+     * @return ResponseEntity containing a list of EventPostDTO objects.
      */
-    public ResponseEntity<Page<EventPostRecord>> getPostsWithPagination(Pageable pageable) {
+    public ResponseEntity<Page<EventPostDTO>> getPostsWithPagination(Pageable pageable) {
         return ResponseEntity.ok(
                 repository
                         .findAll(pageable)
                         .map(
-                                e -> new EventPostRecord(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
+                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
         );
     }
 }

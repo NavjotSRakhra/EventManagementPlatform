@@ -6,7 +6,7 @@ package io.github.navjotsrakhra.eventmanager.service;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
-import io.github.navjotsrakhra.eventmanager.dataModel.exposed.UserData;
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.UserDTO;
 import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.http.HttpStatus;
@@ -35,10 +35,10 @@ public class UserManagementService {
     /**
      * Get a list of all users.
      *
-     * @return ResponseEntity containing a list of UserData objects representing users.
+     * @return ResponseEntity containing a list of UserDTO objects representing users.
      */
-    public ResponseEntity<List<UserData>> getAllUsers() {
-        return ResponseEntity.ok(userRepository.findAll().stream().map(e -> new UserData(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())).toList());
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok(userRepository.findAll().stream().map(e -> new UserDTO(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())).toList());
     }
 
     /**

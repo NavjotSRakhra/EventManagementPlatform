@@ -5,7 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.service;
 
 import io.github.navjotsrakhra.eventmanager.controller.PageController;
-import io.github.navjotsrakhra.eventmanager.dataModel.exposed.RegistrationForm;
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.RegistrationFormDTO;
 import io.github.navjotsrakhra.eventmanager.exception.UserNameTakenException;
 import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,13 +33,13 @@ public class UserRegistrationService {
     /**
      * Save a user from a registration form with the default role.
      *
-     * @param registrationForm The RegistrationForm object containing user registration data.
+     * @param registrationFormDTO The RegistrationFormDTO object containing user registration data.
      * @return A redirection to {@link PageController#login()} upon successful registration.
      * @throws UserNameTakenException If the username is already taken.
      */
-    public String saveUserFromRegistrationFormWIthDefaultRole(RegistrationForm registrationForm) throws UserNameTakenException {
+    public String saveUserFromRegistrationFormWIthDefaultRole(RegistrationFormDTO registrationFormDTO) throws UserNameTakenException {
         try {
-            repository.save(registrationForm.toUserObject(encoder));
+            repository.save(registrationFormDTO.toUserObject(encoder));
         } catch (Exception e) {
             if (e.getMessage().contains("duplicate key value violates")) throw new UserNameTakenException();
             else throw e;
