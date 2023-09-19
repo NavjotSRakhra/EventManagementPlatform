@@ -4,6 +4,7 @@
 
 package io.github.navjotsrakhra.eventmanager.service;
 
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostAdminDTO;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
 import io.github.navjotsrakhra.eventmanager.repository.EventPostRepository;
 import org.springframework.data.domain.Page;
@@ -77,6 +78,23 @@ public class EventPostGetService {
                         .map(
                                 e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime())
                         )
+        );
+    }
+
+    /**
+     * Get a list of all event posts with pagination. See {@link Pageable}.
+     * Defaults to page 0, size 5, sorted by postedAt.
+     * This method is intended for use by administrators.
+     *
+     * @param pageable The pagination object. See {@link Pageable}.
+     * @return ResponseEntity containing a list of EventPostAdminDTO objects.
+     */
+    public ResponseEntity<Page<EventPostAdminDTO>> getAllPostsWithPagination(Pageable pageable) {
+        return ResponseEntity.ok(
+                repository
+                        .findAll(pageable)
+                        .map(
+                                e -> new EventPostAdminDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime(), e.getPostedBy(), e.getPostedAt()))
         );
     }
 }
