@@ -168,10 +168,6 @@ public class EventPost {
         this.id = id;
     }
 
-    public String getPostedBy() {
-        return postedBy;
-    }
-
     public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
     }
