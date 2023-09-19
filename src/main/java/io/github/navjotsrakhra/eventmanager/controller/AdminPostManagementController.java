@@ -29,12 +29,12 @@ public class AdminPostManagementController {
     }
 
     /**
-     * Handles POST requests for the "/admin/events/delete/{id}" URL to delete an event post.
+     * Handles DELETE requests for the "/admin/events/delete/{id}" URL to delete an event post.
      *
      * @param id The ID of the event post to delete.
      * @return ResponseEntity indicating the result of the deletion operation.
      */
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEventPost(@PathVariable Long id) {
         return eventPostEditService.deletePostById(id);
     }
