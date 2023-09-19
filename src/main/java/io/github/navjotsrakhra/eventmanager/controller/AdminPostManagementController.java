@@ -4,9 +4,15 @@
 
 package io.github.navjotsrakhra.eventmanager.controller;
 
+import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostAdminDTO;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
 import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
 import io.github.navjotsrakhra.eventmanager.service.EventPostEditService;
+import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +24,22 @@ import org.springframework.web.bind.annotation.*;
 public class AdminPostManagementController {
 
     private final EventPostEditService eventPostEditService;
+    private final EventPostGetService eventPostGetService;
 
     /**
      * Constructor for the AdminPostManagementController class.
      *
      * @param eventPostEditService Service for editing event posts.
+     * @param eventPostGetService
      */
-    public AdminPostManagementController(EventPostEditService eventPostEditService) {
+    public AdminPostManagementController(EventPostEditService eventPostEditService, EventPostGetService eventPostGetService) {
         this.eventPostEditService = eventPostEditService;
+        this.eventPostGetService = eventPostGetService;
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<EventPostAdminDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return eventPostGetService.getAllPostsWithPagination(pageable);
     }
 
     /**
