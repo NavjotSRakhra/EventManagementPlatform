@@ -43,8 +43,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/admin/**", "/actuator/**").hasAuthority(Role.ADMIN.name())
-                        .requestMatchers("/events/post").hasAnyAuthority(Role.ADMIN.name(), Role.MANAGEMENT.name())
-                        .requestMatchers("/events", "/login", "/register").permitAll()
+                        .requestMatchers("/user/events/post").hasAuthority(Role.MANAGEMENT.name())
+                        .requestMatchers("/events/**", "/login", "/register").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login")
