@@ -1,0 +1,8 @@
+io.github.navjotsrakhra.eventmanager
+io.github.navjotsrakhra.eventmanager.config
+io.github.navjotsrakhra.eventmanager.controller
+io.github.navjotsrakhra.eventmanager.dataModel
+io.github.navjotsrakhra.eventmanager.dataModel.dto
+io.github.navjotsrakhra.eventmanager.exception
+io.github.navjotsrakhra.eventmanager.repository
+io.github.navjotsrakhra.eventmanager.service
