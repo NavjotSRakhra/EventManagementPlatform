@@ -6,11 +6,17 @@ for administrators.
 
 ## Table of Contents
 
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
+<!-- TOC -->
+
+* [Event Manager Application](#event-manager-application)
+    * [Features](#features)
+    * [Documentation](#documentation)
+    * [Prerequisites](#prerequisites)
+    * [Installation](#installation)
+    * [Usage](#usage)
+    * [License](#license)
+
+<!-- TOC -->
 
 ## Features
 
