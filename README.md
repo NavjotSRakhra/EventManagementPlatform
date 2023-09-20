@@ -21,6 +21,10 @@ for administrators.
 - RESTful API for event posts.
 - Exception handling for validation and error responses.
 
+## Documentation
+
+https://navjotsrakhra.github.io/EventManagementPlatform/
+
 ## Prerequisites
 
 Before you begin, ensure you have met the following requirements:
