@@ -5,6 +5,8 @@
 package io.github.navjotsrakhra.eventmanager.config;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.Role;
+import io.github.navjotsrakhra.eventmanager.service.UserManagementService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +22,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    private final UserManagementService userManagementService;
+
+    public SecurityConfig(UserManagementService userManagementService) {
+        this.userManagementService = userManagementService;
+    }
+
     /**
      * Configure the password encoder for encoding and validating passwords.
      *
@@ -49,8 +57,11 @@ public class SecurityConfig {
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .permitAll()
-                        .defaultSuccessUrl("/events"))
+                        .successHandler((request, response, authentication) -> {
+                            response.setHeader("roles", authentication.getAuthorities().toString());
+                        })
+                        .failureHandler((request, response, exception) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                        .permitAll())
                 .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer
                         .deleteCookies("JSESSIONID"));
 

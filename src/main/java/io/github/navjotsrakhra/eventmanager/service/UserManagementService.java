@@ -8,7 +8,6 @@ import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.UserDTO;
 import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
-import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import java.util.Optional;
  */
 @Service
 public class UserManagementService {
-    private final ListCrudRepository<UserObject, Long> userRepository;
+    private final UserRepository userRepository;
 
     /**
      * Constructor for the UserManagementService class.
@@ -60,5 +59,12 @@ public class UserManagementService {
         userRepository.save(userToBeUpdated.get());
 
         return ResponseEntity.ok(Boolean.TRUE);
+    }
+
+    public ResponseEntity<List<Role>> getUserRole(String username) {
+        var user = userRepository.findByUsername(username);
+        if (user == null) return ResponseEntity.notFound().build();
+        var roles = user.getRoles();
+        return ResponseEntity.ok(roles);
     }
 }
