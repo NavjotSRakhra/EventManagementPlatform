@@ -5,6 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.controller;
 
 import io.github.navjotsrakhra.eventmanager.service.UserSettingsService;
+import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import java.security.Principal;
 @RequestMapping("/settings/user")
 public class UserSettingsController {
     private final UserSettingsService userSettingsService;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(UserSettingsController.class);
 
     /**
      * Constructor for the UserSettingsController class.
@@ -39,6 +41,7 @@ public class UserSettingsController {
      */
     @PostMapping("/password")
     public ResponseEntity<?> changePassword(@RequestBody String newPassword, Principal principal) {
+        LOG.info("Changing password for user: {}", principal.getName());
         return userSettingsService.changePassword(principal, newPassword);
     }
 }

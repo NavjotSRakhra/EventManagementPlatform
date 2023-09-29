@@ -5,6 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.dataModel;
 
 import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,6 +32,7 @@ public class EventPost {
     private String title;
     @NotNull(message = "Content is mandatory")
     @NotBlank(message = "Content is mandatory")
+    @Column(columnDefinition = "TEXT")
     private String content;
     @NotNull(message = "Location is mandatory")
     @NotBlank(message = "Location is mandatory")

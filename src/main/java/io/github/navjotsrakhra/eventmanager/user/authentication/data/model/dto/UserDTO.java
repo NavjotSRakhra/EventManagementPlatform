@@ -2,9 +2,9 @@
  * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
-package io.github.navjotsrakhra.eventmanager.dataModel.dto;
+package io.github.navjotsrakhra.eventmanager.user.authentication.data.model.dto;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.Role;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
 
 import java.util.List;
 

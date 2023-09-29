@@ -4,8 +4,8 @@
 
 package io.github.navjotsrakhra.eventmanager.dataModel.dto;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.Role;
-import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
