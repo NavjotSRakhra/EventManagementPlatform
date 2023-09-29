@@ -8,6 +8,8 @@ import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.UserDTO;
 import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,7 +37,9 @@ public class UserManagementService {
      * Get a list of all users.
      *
      * @return ResponseEntity containing a list of UserDTO objects representing users.
+     * @deprecated Use {@link #getAllUsersWithPagination(Pageable)} instead.
      */
+    @Deprecated
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userRepository.findAll().stream().map(e -> new UserDTO(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())).toList());
     }
@@ -59,6 +63,22 @@ public class UserManagementService {
         userRepository.save(userToBeUpdated.get());
 
         return ResponseEntity.ok(Boolean.TRUE);
+    }
+
+    /**
+     * Get a list of all users with pagination. See {@link Pageable}. Defaults to page 0, size 5, sorted by username.
+     *
+     * @param pageable The pagination object. See {@link Pageable}.
+     * @return ResponseEntity containing a list of UserDTO objects.
+     */
+
+    public ResponseEntity<Page<UserDTO>> getAllUsersWithPagination(Pageable pageable) {
+        return ResponseEntity.ok(
+                userRepository.findAll(pageable)
+                        .map(
+                                e -> new UserDTO(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())
+                        )
+        );
     }
 
     public ResponseEntity<List<Role>> getUserRole(String username) {

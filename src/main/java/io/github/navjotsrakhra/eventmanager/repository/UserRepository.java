@@ -6,12 +6,13 @@ package io.github.navjotsrakhra.eventmanager.repository;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * The UserRepository interface provides data access methods for interacting with UserObject entities.
  */
-public interface UserRepository extends ListCrudRepository<UserObject, Long> {
-    
+public interface UserRepository extends ListCrudRepository<UserObject, Long>, PagingAndSortingRepository<UserObject, Long> {
+
     /**
      * Find a user by their username.
      *
