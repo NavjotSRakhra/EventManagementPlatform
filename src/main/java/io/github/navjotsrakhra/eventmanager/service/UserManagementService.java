@@ -8,6 +8,7 @@ import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
 import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
 import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.dto.UserDTO;
 import io.github.navjotsrakhra.eventmanager.user.authentication.repository.UserRepository;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Service
 public class UserManagementService {
     private final UserRepository userRepository;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(UserManagementService.class);
 
     /**
      * Constructor for the UserManagementService class.
@@ -41,6 +43,7 @@ public class UserManagementService {
      */
     @Deprecated
     public ResponseEntity<List<UserDTO>> getAllUsers() {
+        LOG.warn("getAllUsers() is deprecated. Use getAllUsersWithPagination() instead.");
         return ResponseEntity.ok(userRepository.findAll().stream().map(e -> new UserDTO(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())).toList());
     }
 
@@ -52,16 +55,20 @@ public class UserManagementService {
      * @return ResponseEntity indicating the result of the operation.
      */
     public ResponseEntity<Boolean> updateUserRoles(Long id, List<Role> updatedRoles) {
+        LOG.info("Updating user roles, id: {}, updatedRoles: {}", id, updatedRoles);
 
         Optional<UserObject> userToBeUpdated = userRepository.findById(id);
-        if (userToBeUpdated.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
-
+        if (userToBeUpdated.isEmpty()) {
+            LOG.warn("User with ID: {} not found", id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Boolean.FALSE);
+        }
         List<Role> userRoles = userToBeUpdated.get().getRoles();
+        LOG.info("User roles before update: {}", userRoles);
         userRoles.removeIf(e -> true);
         userRoles.addAll(updatedRoles);
 
         userRepository.save(userToBeUpdated.get());
-
+        LOG.info("User roles after update: {}", userRoles);
         return ResponseEntity.ok(Boolean.TRUE);
     }
 
@@ -79,12 +86,5 @@ public class UserManagementService {
                                 e -> new UserDTO(e.getId(), e.getUsername(), e.getRoles(), e.isAccountLocked(), e.isAccountExpired(), e.isCredentialsExpired())
                         )
         );
-    }
-
-    public ResponseEntity<List<Role>> getUserRole(String username) {
-        var user = userRepository.findByUsername(username);
-        if (user == null) return ResponseEntity.notFound().build();
-        var roles = user.getRoles();
-        return ResponseEntity.ok(roles);
     }
 }
