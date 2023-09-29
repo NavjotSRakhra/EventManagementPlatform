@@ -2,9 +2,9 @@
  * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
-package io.github.navjotsrakhra.eventmanager.repository;
+package io.github.navjotsrakhra.eventmanager.user.authentication.repository;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

@@ -4,9 +4,9 @@
 
 package io.github.navjotsrakhra.eventmanager.controller;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.Role;
-import io.github.navjotsrakhra.eventmanager.dataModel.dto.UserDTO;
 import io.github.navjotsrakhra.eventmanager.service.UserManagementService;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.dto.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

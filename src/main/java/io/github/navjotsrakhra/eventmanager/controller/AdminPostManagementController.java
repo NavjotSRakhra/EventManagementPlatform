@@ -30,7 +30,6 @@ public class AdminPostManagementController {
      * Constructor for the AdminPostManagementController class.
      *
      * @param eventPostEditService Service for editing event posts.
-     * @param eventPostGetService
      */
     public AdminPostManagementController(EventPostEditService eventPostEditService, EventPostGetService eventPostGetService) {
         this.eventPostEditService = eventPostEditService;

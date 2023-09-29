@@ -4,8 +4,8 @@
 
 package io.github.navjotsrakhra.eventmanager.service;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
-import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
+import io.github.navjotsrakhra.eventmanager.user.authentication.repository.UserRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

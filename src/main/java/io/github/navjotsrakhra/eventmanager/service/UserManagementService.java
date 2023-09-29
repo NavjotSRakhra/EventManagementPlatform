@@ -4,10 +4,10 @@
 
 package io.github.navjotsrakhra.eventmanager.service;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.Role;
-import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
-import io.github.navjotsrakhra.eventmanager.dataModel.dto.UserDTO;
-import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.dto.UserDTO;
+import io.github.navjotsrakhra.eventmanager.user.authentication.repository.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

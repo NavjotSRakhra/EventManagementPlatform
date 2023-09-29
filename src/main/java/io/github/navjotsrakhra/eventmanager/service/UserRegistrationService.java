@@ -7,7 +7,7 @@ package io.github.navjotsrakhra.eventmanager.service;
 import io.github.navjotsrakhra.eventmanager.controller.PageController;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.RegistrationFormDTO;
 import io.github.navjotsrakhra.eventmanager.exception.UserNameTakenException;
-import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
+import io.github.navjotsrakhra.eventmanager.user.authentication.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
