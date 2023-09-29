@@ -61,10 +61,4 @@ public class UserManagementService {
         return ResponseEntity.ok(Boolean.TRUE);
     }
 
-    public ResponseEntity<List<Role>> getUserRole(String username) {
-        var user = userRepository.findByUsername(username);
-        if (user == null) return ResponseEntity.notFound().build();
-        var roles = user.getRoles();
-        return ResponseEntity.ok(roles);
-    }
 }
