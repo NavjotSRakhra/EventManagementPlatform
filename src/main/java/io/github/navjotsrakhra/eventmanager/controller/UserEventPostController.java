@@ -4,6 +4,7 @@
 
 package io.github.navjotsrakhra.eventmanager.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
 import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
 
 /**
  * The EventPostController class handles HTTP requests related to event posts.
@@ -60,6 +63,7 @@ public class UserEventPostController {
      */
     @GetMapping
     public ResponseEntity<Page<EventPostDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination, Principal principal) {
+        LOG.info("Getting all events, pageable: {}, user updating: {}", pagination, principal.getName());
         return eventPostGetService.getPostsWithPaginationOfUser(pagination, principal);
     }
 
@@ -74,6 +78,7 @@ public class UserEventPostController {
      */
     @PostMapping("/post")
     public ResponseEntity<?> addEvent(@RequestBody EventPostDTO newEvent, Principal principal) throws DateValidationFailedException {
+        LOG.info("Adding new event: {}, user adding: {}", newEvent, principal.getName());
         return eventPostAddService.addEvent(newEvent.toEventPost(), principal);
     }
 
@@ -88,6 +93,7 @@ public class UserEventPostController {
      */
     @PostMapping("/edit/{ID}")
     public ResponseEntity<?> editEvent(@PathVariable Long ID, @RequestBody EventPostDTO editedEvent, Principal principal) throws DateValidationFailedException {
+        LOG.info("Editing event with ID: {}, new values: {}, user editing: {}", ID, editedEvent, principal.getName());
         return eventPostEditService.updatePostById(ID, editedEvent.toEventPost(), principal);
     }
 
@@ -101,6 +107,7 @@ public class UserEventPostController {
      */
     @DeleteMapping("/delete/{ID}")
     public ResponseEntity<?> deleteEvent(@PathVariable Long ID, Principal principal) {
+        LOG.info("Deleting event with ID: {}, user deleting: {}", ID, principal.getName());
         return eventPostEditService.deletePostById(ID, principal);
     }
 
@@ -112,10 +119,11 @@ public class UserEventPostController {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<String>> handleValidationException(MethodArgumentNotValidException methodArgumentNotValidException) {
+        LOG.error("Validation failed: {}", methodArgumentNotValidException.getMessage());
+        LOG.trace(methodArgumentNotValidException.getMessage(), methodArgumentNotValidException);
         List<String> errors = new ArrayList<>();
 
-        if (methodArgumentNotValidException != null)
-            methodArgumentNotValidException.getBindingResult().getAllErrors().forEach(error -> errors.add((error.getDefaultMessage())));
+        methodArgumentNotValidException.getBindingResult().getAllErrors().forEach(error -> errors.add((error.getDefaultMessage())));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
@@ -128,6 +136,8 @@ public class UserEventPostController {
      */
     @ExceptionHandler(DateValidationFailedException.class)
     public ResponseEntity<String> handleDateValidationException(DateValidationFailedException e) {
+        LOG.error("Date validation failed: {}", e.getMessage());
+        LOG.trace(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
@@ -140,8 +150,25 @@ public class UserEventPostController {
      */
     @ExceptionHandler(PostNotFoundException.class)
     public ResponseEntity<String> handlePostNotFoundException(PostNotFoundException e) {
+        LOG.error("Post not found: {}", e.getMessage());
+        LOG.trace(e.getMessage(), e);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage());
+    }
+
+    /**
+     * Handles exceptions related to JSON parsing.
+     *
+     * @param e Exception related to JSON parsing.
+     * @return ResponseEntity containing an error message with a BAD_REQUEST status.
+     */
+    @ExceptionHandler(JsonParseException.class)
+    public ResponseEntity<String> handleJsonParseException(JsonParseException e) {
+        LOG.error("Json parse exception: {}", e.getMessage());
+        LOG.trace(e.getMessage(), e);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());
     }
 }

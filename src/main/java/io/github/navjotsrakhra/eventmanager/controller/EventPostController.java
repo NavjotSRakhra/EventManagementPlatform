@@ -5,6 +5,7 @@
 package io.github.navjotsrakhra.eventmanager.controller;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
+import io.github.navjotsrakhra.eventmanager.logging.Logger;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +42,7 @@ public class EventPostController {
      */
     @GetMapping
     public ResponseEntity<Page<EventPostDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination) {
+        Logger.LOG.info("Getting all events, pageable: {}", pagination);
         return eventPostGetService.getPostsWithPagination(pagination);
     }
 }

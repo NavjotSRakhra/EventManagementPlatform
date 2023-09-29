@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
+
 /**
  * The RegistrationController class handles HTTP requests related to user registration.
  */
@@ -37,6 +39,7 @@ public class RegistrationController {
      */
     @PostMapping
     public String register(@RequestBody RegistrationFormDTO registrationFormDTO) throws UserNameTakenException {
+        LOG.info("Registering user: {}", registrationFormDTO);
         return userRegistrationService.saveUserFromRegistrationFormWIthDefaultRole(registrationFormDTO);
     }
 
@@ -48,6 +51,8 @@ public class RegistrationController {
      */
     @ExceptionHandler(value = UserNameTakenException.class)
     public ResponseEntity<String> usernameTakenExceptionHandler(UserNameTakenException e) {
+        LOG.error("Username taken: {}", e.getMessage());
+        LOG.trace(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 }

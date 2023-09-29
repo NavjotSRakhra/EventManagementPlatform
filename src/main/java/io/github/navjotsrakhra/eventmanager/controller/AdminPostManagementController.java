@@ -16,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
+
 /**
  * The AdminPostManagementController class handles HTTP requests related to event posts by admin users.
  */
@@ -38,6 +40,7 @@ public class AdminPostManagementController {
 
     @GetMapping
     public ResponseEntity<Page<EventPostAdminDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        LOG.info("Getting all events, pageable: {}", pageable);
         return eventPostGetService.getAllPostsWithPagination(pageable);
     }
 
@@ -49,6 +52,7 @@ public class AdminPostManagementController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteEventPost(@PathVariable Long id) {
+        LOG.info("Deleting event post with ID: {}", id);
         return eventPostEditService.deletePostById(id);
     }
 
@@ -62,6 +66,7 @@ public class AdminPostManagementController {
      */
     @PostMapping("/edit/{id}")
     public ResponseEntity<?> editEventPost(@PathVariable Long id, @RequestBody EventPostDTO eventPostDTO) throws DateValidationFailedException {
+        LOG.info("Updating event post with ID: {}, new values: {}", id, eventPostDTO);
         return eventPostEditService.updatePostById(id, eventPostDTO.toEventPost());
     }
 
@@ -73,6 +78,8 @@ public class AdminPostManagementController {
      */
     @ExceptionHandler(DateValidationFailedException.class)
     public ResponseEntity<?> handleDateValidationFailedException(DateValidationFailedException e) {
+        LOG.error("Date validation failed: {}", e.getMessage());
+        LOG.trace(e.getMessage(), e);
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
+
 /**
  * The AdminUserManagementController class handles HTTP requests related to user management in the admin panel.
  */
@@ -42,6 +44,7 @@ public class AdminUserManagementController {
      */
     @GetMapping("/users")
     public ResponseEntity<Page<UserDTO>> getUsers(@PageableDefault(size = 5, sort = "username", direction = Sort.Direction.ASC) Pageable pageable) {
+        LOG.info("Getting all users, pageable: {}", pageable);
         return userManagementService.getAllUsersWithPagination(pageable);
     }
 
@@ -54,6 +57,7 @@ public class AdminUserManagementController {
      */
     @PostMapping("/updateUserRole/{id}")
     public ResponseEntity<Boolean> updateUserRole(@PathVariable Long id, @RequestBody List<Role> updatedRoles) {
+        LOG.info("Updating user roles for user with ID: {}, updated roles: {}", id, updatedRoles);
         return userManagementService.updateUserRoles(id, updatedRoles);
     }
 }
