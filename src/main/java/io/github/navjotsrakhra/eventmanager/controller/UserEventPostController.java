@@ -12,6 +12,7 @@ import io.github.navjotsrakhra.eventmanager.exception.PostNotFoundException;
 import io.github.navjotsrakhra.eventmanager.service.EventPostAddService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostEditService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,7 +26,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
 
 /**
  * The EventPostController class handles HTTP requests related to event posts.
@@ -39,6 +39,7 @@ public class UserEventPostController {
     private final EventPostGetService eventPostGetService;
     private final EventPostAddService eventPostAddService;
     private final EventPostEditService eventPostEditService;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(UserEventPostController.class);
 
     /**
      * Constructor for the EventPostController class.

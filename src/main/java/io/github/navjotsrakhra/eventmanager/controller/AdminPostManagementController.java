@@ -9,6 +9,7 @@ import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
 import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
 import io.github.navjotsrakhra.eventmanager.service.EventPostEditService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,7 +17,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
 
 /**
  * The AdminPostManagementController class handles HTTP requests related to event posts by admin users.
@@ -27,6 +27,8 @@ public class AdminPostManagementController {
 
     private final EventPostEditService eventPostEditService;
     private final EventPostGetService eventPostGetService;
+
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(AdminPostManagementController.class);
 
     /**
      * Constructor for the AdminPostManagementController class.

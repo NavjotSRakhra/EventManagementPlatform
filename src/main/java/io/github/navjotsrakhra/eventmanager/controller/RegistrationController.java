@@ -7,11 +7,10 @@ package io.github.navjotsrakhra.eventmanager.controller;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.RegistrationFormDTO;
 import io.github.navjotsrakhra.eventmanager.exception.UserNameTakenException;
 import io.github.navjotsrakhra.eventmanager.service.UserRegistrationService;
+import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
 
 /**
  * The RegistrationController class handles HTTP requests related to user registration.
@@ -20,6 +19,7 @@ import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
 @RequestMapping("/register")
 public class RegistrationController {
     private final UserRegistrationService userRegistrationService;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(RegistrationController.class);
 
     /**
      * Constructor for the RegistrationController class.

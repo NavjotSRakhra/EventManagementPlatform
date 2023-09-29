@@ -5,8 +5,8 @@
 package io.github.navjotsrakhra.eventmanager.controller;
 
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.EventPostDTO;
-import io.github.navjotsrakhra.eventmanager.logging.Logger;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/events")
 public class EventPostController {
     private final EventPostGetService eventPostGetService;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(EventPostController.class);
 
     /**
      * Constructor for the EventPostController class.
@@ -42,7 +43,7 @@ public class EventPostController {
      */
     @GetMapping
     public ResponseEntity<Page<EventPostDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination) {
-        Logger.LOG.info("Getting all events, pageable: {}", pagination);
+        LOG.info("Getting all events, pageable: {}", pagination);
         return eventPostGetService.getPostsWithPagination(pagination);
     }
 }

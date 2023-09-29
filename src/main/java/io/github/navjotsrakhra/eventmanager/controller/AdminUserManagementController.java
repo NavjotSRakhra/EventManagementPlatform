@@ -7,6 +7,7 @@ package io.github.navjotsrakhra.eventmanager.controller;
 import io.github.navjotsrakhra.eventmanager.service.UserManagementService;
 import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
 import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.dto.UserDTO;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
 
 /**
  * The AdminUserManagementController class handles HTTP requests related to user management in the admin panel.
@@ -26,6 +26,7 @@ import static io.github.navjotsrakhra.eventmanager.logging.Logger.LOG;
 public class AdminUserManagementController {
 
     private final UserManagementService userManagementService;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(AdminUserManagementController.class);
 
     /**
      * Constructor for the AdminUserManagementController class.
