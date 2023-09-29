@@ -7,6 +7,10 @@ package io.github.navjotsrakhra.eventmanager.controller;
 import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.UserDTO;
 import io.github.navjotsrakhra.eventmanager.service.UserManagementService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +35,14 @@ public class AdminUserManagementController {
     }
 
     /**
-     * Handles GET requests for the "/admin/users" URL and retrieves a list of all users.
+     * Handles GET requests for the "/admin/users" URL and retrieves a paginated list of all users.
+     * Paginated using {@link Pageable}. Defaults to page 0, size 5, sorted by username.
      *
      * @return ResponseEntity containing a list of UserDTO objects.
      */
     @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getUsers() {
-        return userManagementService.getAllUsers();
+    public ResponseEntity<Page<UserDTO>> getUsers(@PageableDefault(size = 5, sort = "username", direction = Sort.Direction.ASC) Pageable pageable) {
+        return userManagementService.getAllUsersWithPagination(pageable);
     }
 
     /**
