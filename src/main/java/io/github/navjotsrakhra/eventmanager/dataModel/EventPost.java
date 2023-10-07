@@ -173,4 +173,20 @@ public class EventPost {
     public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
     }
+
+    @Override
+    public String toString() {
+        return "EventPost{" +
+                "postedAt=" + postedAt +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", location='" + location + '\'' +
+                ", startDay=" + startDay +
+                ", endDay=" + endDay +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", postedBy='" + postedBy + '\'' +
+                '}';
+    }
 }
