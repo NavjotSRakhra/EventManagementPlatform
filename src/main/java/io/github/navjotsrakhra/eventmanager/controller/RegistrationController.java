@@ -7,6 +7,7 @@ package io.github.navjotsrakhra.eventmanager.controller;
 import io.github.navjotsrakhra.eventmanager.dataModel.dto.RegistrationFormDTO;
 import io.github.navjotsrakhra.eventmanager.exception.UserNameTakenException;
 import io.github.navjotsrakhra.eventmanager.service.UserRegistrationService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,8 @@ public class RegistrationController {
      * @throws UserNameTakenException if the username is already taken.
      */
     @PostMapping
-    public String register(@RequestBody RegistrationFormDTO registrationFormDTO) throws UserNameTakenException {
-        LOG.info("Registering user: {}", registrationFormDTO);
+    public String register(@RequestBody @Valid RegistrationFormDTO registrationFormDTO) throws UserNameTakenException {
+        LOG.info("Registering username: {}", registrationFormDTO.username());
         return userRegistrationService.saveUserFromRegistrationFormWIthDefaultRole(registrationFormDTO);
     }
 
