@@ -7,8 +7,6 @@ package io.github.navjotsrakhra.eventmanager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.TimeZone;
-
 /**
  * The EventManagerApplication class is the main class of the EventManager application.
  */
@@ -16,7 +14,6 @@ import java.util.TimeZone;
 public class EventManagerApplication {
 
     public static void main(String[] args) {
-        TimeZone.setDefault(TimeZone.getTimeZone("IST"));
         SpringApplication.run(EventManagerApplication.class, args);
     }
 

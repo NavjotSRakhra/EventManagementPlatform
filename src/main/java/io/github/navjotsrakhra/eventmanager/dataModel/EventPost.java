@@ -13,9 +13,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 /**
  * The EventPost class represents an event post entity with details such as title, content, location, and date/time information.
@@ -50,10 +48,10 @@ public class EventPost {
     private String postedBy;
 
     /**
-     * Default constructor initializes the 'postedAt' timestamp to the current date and time.
+     * Default constructor for creating an EventPost with the current date and time of time zone Asia/Kolkata.
      */
     public EventPost() {
-        this.postedAt = LocalDateTime.now();
+        this.postedAt = ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toLocalDateTime();
     }
 
     /**
@@ -177,8 +175,7 @@ public class EventPost {
     @Override
     public String toString() {
         return "EventPost{" +
-                "postedAt=" + postedAt +
-                ", id=" + id +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", location='" + location + '\'' +
@@ -186,6 +183,7 @@ public class EventPost {
                 ", endDay=" + endDay +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", postedAt=" + postedAt +
                 ", postedBy='" + postedBy + '\'' +
                 '}';
     }
