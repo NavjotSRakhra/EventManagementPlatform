@@ -21,7 +21,7 @@ import java.time.*;
 @Getter
 @Entity
 public class EventPost {
-    private final LocalDateTime postedAt;
+
     @Id
     @GeneratedValue
     private Long id;
@@ -46,6 +46,8 @@ public class EventPost {
     @NotNull(message = "Posted by is mandatory")
     @NotBlank
     private String postedBy;
+    @NotNull
+    private LocalDateTime postedAt;
 
     /**
      * Default constructor for creating an EventPost with the current date and time of time zone Asia/Kolkata.
@@ -170,6 +172,10 @@ public class EventPost {
 
     public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
+    }
+
+    public void setPostedAt(LocalDateTime postedAt) {
+        this.postedAt = postedAt;
     }
 
     @Override
