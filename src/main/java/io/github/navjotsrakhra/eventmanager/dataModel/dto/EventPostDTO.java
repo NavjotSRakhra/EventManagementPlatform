@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * The EventPostDTO class represents an exposed version of an EventPost, providing a simplified interface for creating event posts.
  */
-public record EventPostDTO(Long ID, String title, String content, String location, LocalDate startDay,
+public record EventPostDTO(Long id, String title, String content, String location, LocalDate startDay,
                            LocalDate endDay,
                            LocalTime startTime, LocalTime endTime) {
     /**

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * The UserDTO record represents an exposed version of a UserObject, providing simplified access to user data.
  */
-public record UserDTO(long ID, String username, List<Role> roles, boolean accountLocked,
+public record UserDTO(long id, String username, List<Role> roles, boolean accountLocked,
                       boolean accountExpired, boolean credentialsExpired) {
 
 }

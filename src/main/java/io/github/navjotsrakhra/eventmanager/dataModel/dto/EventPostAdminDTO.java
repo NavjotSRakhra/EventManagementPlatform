@@ -22,7 +22,7 @@ import java.time.LocalTime;
  * @param postedBy  The user who posted the event.
  * @param postedAt  The date and time the event was posted.
  */
-public record EventPostAdminDTO(Long ID, String title, String content, String location, LocalDate startDay,
+public record EventPostAdminDTO(Long id, String title, String content, String location, LocalDate startDay,
                                 LocalDate endDay,
                                 LocalTime startTime, LocalTime endTime, String postedBy,
                                 java.time.LocalDateTime postedAt) {
