@@ -11,7 +11,7 @@ import java.time.LocalTime;
  * The EventPostAdminDTO class represents an exposed version of an EventPost, providing a simplified interface for creating event posts.
  * This DTO is used for admin purposes.
  *
- * @param ID        The ID of the event post.
+ * @param id        The ID of the event post.
  * @param title     The title of the event.
  * @param content   The content of the event.
  * @param location  The location of the event.
@@ -22,8 +22,9 @@ import java.time.LocalTime;
  * @param postedBy  The user who posted the event.
  * @param postedAt  The date and time the event was posted.
  */
-public record EventPostAdminDTO(Long id, String title, String content, String location, LocalDate startDay,
-                                LocalDate endDay,
+public record EventPostAdminDTO(Long id, String title, String content, String location,
+                                String enrollmentLink, String image,
+                                LocalDate startDay, LocalDate endDay,
                                 LocalTime startTime, LocalTime endTime, String postedBy,
                                 java.time.LocalDateTime postedAt) {
 }

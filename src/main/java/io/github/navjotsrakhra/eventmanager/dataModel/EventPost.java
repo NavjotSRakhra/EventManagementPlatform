@@ -35,6 +35,9 @@ public class EventPost {
     @NotNull(message = "Location is mandatory")
     @NotBlank(message = "Location is mandatory")
     private String location;
+    private String enrollmentLink;
+    @Column(columnDefinition = "TEXT")
+    private String image;
     @NotNull(message = "Start day is mandatory")
     private LocalDate startDay;
     @NotNull(message = "End day is mandatory")
@@ -59,21 +62,25 @@ public class EventPost {
     /**
      * Constructor for creating an EventPost with provided details.
      *
-     * @param title     The title of the event.
-     * @param content   The content or description of the event.
-     * @param location  The location where the event will take place.
-     * @param startDay  The starting date of the event.
-     * @param endDay    The ending date of the event.
-     * @param startTime The starting time of the event.
-     * @param endTime   The ending time of the event.
+     * @param title          The title of the event.
+     * @param content        The content or description of the event.
+     * @param location       The location where the event will take place.
+     * @param enrollmentLink The link to the enrollment page of the event.
+     * @param image          The image of the event.
+     * @param startDay       The starting date of the event.
+     * @param endDay         The ending date of the event.
+     * @param startTime      The starting time of the event.
+     * @param endTime        The ending time of the event.
      * @throws DateValidationFailedException If date validation fails.
      */
-    public EventPost(String title, String content, String location, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
+    public EventPost(String title, String content, String location, String enrollmentLink, String image, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
         this();
 
         setTitle(title);
         setContent(content);
         setLocation(location);
+        setEnrollmentLink(enrollmentLink);
+        setImage(image);
 
         setStartDay(startDay);
         setEndDay(endDay);
@@ -178,6 +185,14 @@ public class EventPost {
         this.postedAt = postedAt;
     }
 
+    public void setEnrollmentLink(String enrollmentLink) {
+        this.enrollmentLink = enrollmentLink;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "EventPost{" +
@@ -185,12 +200,14 @@ public class EventPost {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", location='" + location + '\'' +
+                ", enrollmentLink='" + enrollmentLink + '\'' +
+                ", image='" + image + '\'' +
                 ", startDay=" + startDay +
                 ", endDay=" + endDay +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", postedAt=" + postedAt +
                 ", postedBy='" + postedBy + '\'' +
+                ", postedAt=" + postedAt +
                 '}';
     }
 }

@@ -121,8 +121,10 @@ public class EventPostEditService {
      * @throws DateValidationFailedException If there is a validation error related to dates.
      */
     private ResponseEntity<?> updateEventPost(@Valid EventPost newEventPostData, EventPost eventPost) throws DateValidationFailedException {
-        eventPost.setContent(newEventPostData.getContent());
         eventPost.setTitle(newEventPostData.getTitle());
+        eventPost.setContent(newEventPostData.getContent());
+        eventPost.setEnrollmentLink(newEventPostData.getEnrollmentLink());
+        eventPost.setImage(newEventPostData.getImage());
         eventPost.setStartDay(newEventPostData.getStartDay());
         eventPost.setEndDay(newEventPostData.getEndDay());
         eventPost.setLocation(newEventPostData.getLocation());
@@ -133,8 +135,7 @@ public class EventPostEditService {
         LOG.info("Event successfully updated: {}", eventPost);
 
         return ResponseEntity
-                .ok(new EventPostDTO(eventPost.getId(), eventPost.getTitle(), eventPost.getContent(), eventPost.getLocation(), eventPost.getStartDay(), eventPost.getEndDay(), eventPost.getStartTime(), eventPost.getEndTime()))
-                ;
+                .ok(new EventPostDTO(eventPost.getId(), eventPost.getTitle(), eventPost.getContent(), eventPost.getLocation(), eventPost.getEnrollmentLink(), eventPost.getImage(), eventPost.getStartDay(), eventPost.getEndDay(), eventPost.getStartTime(), eventPost.getEndTime()));
     }
 
     /**

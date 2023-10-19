@@ -43,7 +43,7 @@ public class AdminPostManagementController {
     @GetMapping
     public ResponseEntity<Page<EventPostAdminDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pageable) {
         LOG.info("Getting all events, pageable: {}", pageable);
-        return eventPostGetService.getAllPostsWithPagination(pageable);
+        return eventPostGetService.getAdminPostsWithPagination(pageable);
     }
 
     /**

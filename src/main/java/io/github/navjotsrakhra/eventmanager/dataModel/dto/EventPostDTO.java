@@ -14,8 +14,9 @@ import java.time.format.DateTimeFormatter;
 /**
  * The EventPostDTO class represents an exposed version of an EventPost, providing a simplified interface for creating event posts.
  */
-public record EventPostDTO(Long id, String title, String content, String location, LocalDate startDay,
-                           LocalDate endDay,
+public record EventPostDTO(Long id, String title, String content, String location, String enrollmentLink,
+                           String image,
+                           LocalDate startDay, LocalDate endDay,
                            LocalTime startTime, LocalTime endTime) {
     /**
      * Converts this EventPostRecord to an EventPost object.
@@ -24,6 +25,6 @@ public record EventPostDTO(Long id, String title, String content, String locatio
      * @throws DateValidationFailedException if date validation fails.
      */
     public EventPost toEventPost() throws DateValidationFailedException {
-        return new EventPost(title, content, location, startDay, endDay, LocalTime.parse(startTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))), LocalTime.parse(endTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
+        return new EventPost(title, content, location, enrollmentLink, image, startDay, endDay, LocalTime.parse(startTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))), LocalTime.parse(endTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
     }
 }
