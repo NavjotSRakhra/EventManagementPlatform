@@ -36,8 +36,7 @@ public class EventPost {
     @NotBlank(message = "Location is mandatory")
     private String location;
     private String enrollmentLink;
-    @Column(columnDefinition = "TEXT")
-    private String image;
+    private String imageLink;
     @NotNull(message = "Start day is mandatory")
     private LocalDate startDay;
     @NotNull(message = "End day is mandatory")
@@ -66,21 +65,21 @@ public class EventPost {
      * @param content        The content or description of the event.
      * @param location       The location where the event will take place.
      * @param enrollmentLink The link to the enrollment page of the event.
-     * @param image          The image of the event.
+     * @param imageLink      The image of the event.
      * @param startDay       The starting date of the event.
      * @param endDay         The ending date of the event.
      * @param startTime      The starting time of the event.
      * @param endTime        The ending time of the event.
      * @throws DateValidationFailedException If date validation fails.
      */
-    public EventPost(String title, String content, String location, String enrollmentLink, String image, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
+    public EventPost(String title, String content, String location, String enrollmentLink, String imageLink, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
         this();
 
         setTitle(title);
         setContent(content);
         setLocation(location);
         setEnrollmentLink(enrollmentLink);
-        setImage(image);
+        setImageLink(imageLink);
 
         setStartDay(startDay);
         setEndDay(endDay);
@@ -189,8 +188,8 @@ public class EventPost {
         this.enrollmentLink = enrollmentLink;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageLink(String image) {
+        this.imageLink = image;
     }
 
     @Override
@@ -201,7 +200,7 @@ public class EventPost {
                 ", content='" + content + '\'' +
                 ", location='" + location + '\'' +
                 ", enrollmentLink='" + enrollmentLink + '\'' +
-                ", image='" + image + '\'' +
+                ", imageLink='" + imageLink + '\'' +
                 ", startDay=" + startDay +
                 ", endDay=" + endDay +
                 ", startTime=" + startTime +

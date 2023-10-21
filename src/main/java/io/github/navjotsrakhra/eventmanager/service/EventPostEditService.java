@@ -124,7 +124,7 @@ public class EventPostEditService {
         eventPost.setTitle(newEventPostData.getTitle());
         eventPost.setContent(newEventPostData.getContent());
         eventPost.setEnrollmentLink(newEventPostData.getEnrollmentLink());
-        eventPost.setImage(newEventPostData.getImage());
+        eventPost.setImageLink(newEventPostData.getImageLink());
         eventPost.setStartDay(newEventPostData.getStartDay());
         eventPost.setEndDay(newEventPostData.getEndDay());
         eventPost.setLocation(newEventPostData.getLocation());
@@ -135,7 +135,7 @@ public class EventPostEditService {
         LOG.info("Event successfully updated: {}", eventPost);
 
         return ResponseEntity
-                .ok(new EventPostDTO(eventPost.getId(), eventPost.getTitle(), eventPost.getContent(), eventPost.getLocation(), eventPost.getEnrollmentLink(), eventPost.getImage(), eventPost.getStartDay(), eventPost.getEndDay(), eventPost.getStartTime(), eventPost.getEndTime()));
+                .ok(new EventPostDTO(eventPost.getId(), eventPost.getTitle(), eventPost.getContent(), eventPost.getLocation(), eventPost.getEnrollmentLink(), eventPost.getImageLink(), eventPost.getStartDay(), eventPost.getEndDay(), eventPost.getStartTime(), eventPost.getEndTime()));
     }
 
     /**

@@ -44,7 +44,7 @@ public class EventPostGetService {
                         .findAll()
                         .stream()
                         .map(
-                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImage(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
+                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImageLink(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
                         .toList()
         );
     }
@@ -60,7 +60,7 @@ public class EventPostGetService {
                 repository
                         .findAll(pageable)
                         .map(
-                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImage(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
+                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImageLink(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime()))
         );
     }
 
@@ -76,7 +76,7 @@ public class EventPostGetService {
         return ResponseEntity.ok(
                 repository.findEventPostByPostedBy(principal.getName(), pageable)
                         .map(
-                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImage(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime())
+                                e -> new EventPostDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImageLink(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime())
                         )
         );
     }
@@ -94,7 +94,7 @@ public class EventPostGetService {
                 repository
                         .findAll(pageable)
                         .map(
-                                e -> new EventPostAdminDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImage(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime(), e.getPostedBy(), e.getPostedAt()))
+                                e -> new EventPostAdminDTO(e.getId(), e.getTitle(), e.getContent(), e.getLocation(), e.getEnrollmentLink(), e.getImageLink(), e.getStartDay(), e.getEndDay(), e.getStartTime(), e.getEndTime(), e.getPostedBy(), e.getPostedAt()))
         );
     }
 }

@@ -50,7 +50,7 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/admin/**", "/actuator/**").hasAuthority(Role.ADMIN.name())
+                        .requestMatchers("/admin/**", "/actuator/**", "/error").hasAuthority(Role.ADMIN.name())
                         .requestMatchers("/user/events/post").hasAnyAuthority(Role.MANAGEMENT.name(), Role.ADMIN.name())
                         .requestMatchers("/events/**", "/login", "/register").permitAll()
                         .anyRequest().authenticated())
