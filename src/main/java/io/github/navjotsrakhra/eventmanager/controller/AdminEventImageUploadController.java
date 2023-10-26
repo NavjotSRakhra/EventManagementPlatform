@@ -6,6 +6,7 @@ package io.github.navjotsrakhra.eventmanager.controller;
 
 import io.github.navjotsrakhra.eventmanager.service.ImageUploadAndSaveLinkService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ public class AdminEventImageUploadController {
     }
 
     @PostMapping("/upload/{id}")
-    public ResponseEntity<Void> uploadImage(MultipartFile file, Long id) throws IOException {
+    public ResponseEntity<Void> uploadImage(MultipartFile file, @PathVariable Long id) throws IOException {
         return imageUploadAndSaveLinkService.uploadImageAndSaveLink(id, file);
     }
 }
