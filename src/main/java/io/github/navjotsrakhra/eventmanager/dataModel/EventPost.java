@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import org.hibernate.validator.constraints.URL;
 
 import java.time.*;
 
@@ -36,8 +37,10 @@ public class EventPost {
     @NotBlank(message = "Location cannot be blank")
     private String location;
     @NotBlank(message = "Enrollment link cannot be blank")
+    @URL
     private String enrollmentLink;
     @NotBlank(message = "Image link cannot be blank")
+    @URL
     private String imageLink;
     @NotNull(message = "Start day is mandatory")
     private LocalDate startDay;
