@@ -36,10 +36,8 @@ public class EventPost {
     @NotNull(message = "Location is mandatory")
     @NotBlank(message = "Location cannot be blank")
     private String location;
-    @NotBlank(message = "Enrollment link cannot be blank")
     @URL
     private String enrollmentLink;
-    @NotBlank(message = "Image link cannot be blank")
     @URL
     private String imageLink;
     @NotNull(message = "Start day is mandatory")
