@@ -26,16 +26,18 @@ public class EventPost {
     @GeneratedValue
     private Long id;
     @NotNull(message = "Title is mandatory")
-    @NotBlank(message = "Title is mandatory")
+    @NotBlank(message = "Title cannot be blank")
     private String title;
     @NotNull(message = "Content is mandatory")
-    @NotBlank(message = "Content is mandatory")
+    @NotBlank(message = "Content cannot be blank")
     @Column(columnDefinition = "TEXT")
     private String content;
     @NotNull(message = "Location is mandatory")
-    @NotBlank(message = "Location is mandatory")
+    @NotBlank(message = "Location cannot be blank")
     private String location;
+    @NotBlank(message = "Enrollment link cannot be blank")
     private String enrollmentLink;
+    @NotBlank(message = "Image link cannot be blank")
     private String imageLink;
     @NotNull(message = "Start day is mandatory")
     private LocalDate startDay;
