@@ -7,6 +7,7 @@ package io.github.navjotsrakhra.eventmanager.service;
 import io.github.navjotsrakhra.eventmanager.dataModel.EventPost;
 import io.github.navjotsrakhra.eventmanager.repository.EventPostRepository;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.security.Principal;
 @Service
 public class EventPostAddService {
     private final EventPostRepository repository;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(EventPostAddService.class);
 
     /**
      * Constructor for the EventPostAddService class.
@@ -37,6 +39,7 @@ public class EventPostAddService {
      */
     public ResponseEntity<?> addEvent(@Valid EventPost event, Principal principal) {
         event.setPostedBy(principal.getName());
+        LOG.info("Adding event: {}, user adding: {}", event, principal.getName());
         repository.save(event);
         return ResponseEntity
                 .ok()

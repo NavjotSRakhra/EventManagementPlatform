@@ -5,16 +5,16 @@
 package io.github.navjotsrakhra.eventmanager.dataModel;
 
 import io.github.navjotsrakhra.eventmanager.exception.DateValidationFailedException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import org.hibernate.validator.constraints.URL;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 /**
  * The EventPost class represents an event post entity with details such as title, content, location, and date/time information.
@@ -22,19 +22,24 @@ import java.time.LocalTime;
 @Getter
 @Entity
 public class EventPost {
-    private final LocalDateTime postedAt;
+
     @Id
     @GeneratedValue
     private Long id;
     @NotNull(message = "Title is mandatory")
-    @NotBlank(message = "Title is mandatory")
+    @NotBlank(message = "Title cannot be blank")
     private String title;
     @NotNull(message = "Content is mandatory")
-    @NotBlank(message = "Content is mandatory")
+    @NotBlank(message = "Content cannot be blank")
+    @Column(columnDefinition = "TEXT")
     private String content;
     @NotNull(message = "Location is mandatory")
-    @NotBlank(message = "Location is mandatory")
+    @NotBlank(message = "Location cannot be blank")
     private String location;
+    @URL
+    private String enrollmentLink;
+    @URL
+    private String imageLink;
     @NotNull(message = "Start day is mandatory")
     private LocalDate startDay;
     @NotNull(message = "End day is mandatory")
@@ -46,32 +51,38 @@ public class EventPost {
     @NotNull(message = "Posted by is mandatory")
     @NotBlank
     private String postedBy;
+    @NotNull
+    private LocalDateTime postedAt;
 
     /**
-     * Default constructor initializes the 'postedAt' timestamp to the current date and time.
+     * Default constructor for creating an EventPost with the current date and time of time zone Asia/Kolkata.
      */
     public EventPost() {
-        this.postedAt = LocalDateTime.now();
+        this.postedAt = ZonedDateTime.now(ZoneId.of("Asia/Kolkata")).toLocalDateTime();
     }
 
     /**
      * Constructor for creating an EventPost with provided details.
      *
-     * @param title     The title of the event.
-     * @param content   The content or description of the event.
-     * @param location  The location where the event will take place.
-     * @param startDay  The starting date of the event.
-     * @param endDay    The ending date of the event.
-     * @param startTime The starting time of the event.
-     * @param endTime   The ending time of the event.
+     * @param title          The title of the event.
+     * @param content        The content or description of the event.
+     * @param location       The location where the event will take place.
+     * @param enrollmentLink The link to the enrollment page of the event.
+     * @param imageLink      The image of the event.
+     * @param startDay       The starting date of the event.
+     * @param endDay         The ending date of the event.
+     * @param startTime      The starting time of the event.
+     * @param endTime        The ending time of the event.
      * @throws DateValidationFailedException If date validation fails.
      */
-    public EventPost(String title, String content, String location, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
+    public EventPost(String title, String content, String location, String enrollmentLink, String imageLink, LocalDate startDay, LocalDate endDay, LocalTime startTime, LocalTime endTime) throws DateValidationFailedException {
         this();
 
         setTitle(title);
         setContent(content);
         setLocation(location);
+        setEnrollmentLink(enrollmentLink);
+        setImageLink(imageLink);
 
         setStartDay(startDay);
         setEndDay(endDay);
@@ -170,5 +181,35 @@ public class EventPost {
 
     public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
+    }
+
+    public void setPostedAt(LocalDateTime postedAt) {
+        this.postedAt = postedAt;
+    }
+
+    public void setEnrollmentLink(String enrollmentLink) {
+        this.enrollmentLink = enrollmentLink;
+    }
+
+    public void setImageLink(String image) {
+        this.imageLink = image;
+    }
+
+    @Override
+    public String toString() {
+        return "EventPost{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", location='" + location + '\'' +
+                ", enrollmentLink='" + enrollmentLink + '\'' +
+                ", imageLink='" + imageLink + '\'' +
+                ", startDay=" + startDay +
+                ", endDay=" + endDay +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", postedBy='" + postedBy + '\'' +
+                ", postedAt=" + postedAt +
+                '}';
     }
 }

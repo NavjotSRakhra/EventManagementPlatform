@@ -21,4 +21,11 @@ public class PageController {
     public String login() {
         return "login";
     }
+
+    @GetMapping("/upload")
+    public String upload() {
+        return "upload";
+    }
+
+    ;
 }

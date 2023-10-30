@@ -4,8 +4,8 @@
 
 package io.github.navjotsrakhra.eventmanager.config;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.Role;
 import io.github.navjotsrakhra.eventmanager.service.UserManagementService;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +50,7 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        .requestMatchers("/admin/**", "/actuator/**").hasAuthority(Role.ADMIN.name())
+                        .requestMatchers("/admin/**", "/actuator/**", "/error").hasAuthority(Role.ADMIN.name())
                         .requestMatchers("/user/events/post").hasAnyAuthority(Role.MANAGEMENT.name(), Role.ADMIN.name())
                         .requestMatchers("/events/**", "/login", "/register").permitAll()
                         .anyRequest().authenticated())

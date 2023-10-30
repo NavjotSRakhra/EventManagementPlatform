@@ -2,10 +2,10 @@
  * Copyright (c) 2023 Navjot Singh Rakhra. All rights reserved.
  */
 
-package io.github.navjotsrakhra.eventmanager.config;
+package io.github.navjotsrakhra.eventmanager.user.authentication.config;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
-import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
+import io.github.navjotsrakhra.eventmanager.user.authentication.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;

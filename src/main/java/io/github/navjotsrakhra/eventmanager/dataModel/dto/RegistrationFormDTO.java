@@ -4,8 +4,10 @@
 
 package io.github.navjotsrakhra.eventmanager.dataModel.dto;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.Role;
-import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.Role;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -13,7 +15,9 @@ import java.util.List;
 /**
  * The RegistrationFormDTO class represents a user registration form containing username and password.
  */
-public record RegistrationFormDTO(String username, String password) {
+public record RegistrationFormDTO(
+        @NotNull(message = "The username must not be null") @NotBlank(message = "The username must not be blank") String username,
+        @NotNull(message = "The password cannot be null") @NotBlank(message = "The password cannot be blank") String password) {
     /**
      * Converts this RegistrationForm to a UserObject.
      *

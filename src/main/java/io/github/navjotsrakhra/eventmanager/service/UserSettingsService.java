@@ -4,8 +4,9 @@
 
 package io.github.navjotsrakhra.eventmanager.service;
 
-import io.github.navjotsrakhra.eventmanager.dataModel.UserObject;
-import io.github.navjotsrakhra.eventmanager.repository.UserRepository;
+import io.github.navjotsrakhra.eventmanager.user.authentication.data.model.UserObject;
+import io.github.navjotsrakhra.eventmanager.user.authentication.repository.UserRepository;
+import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.util.Optional;
 public class UserSettingsService {
     private final UserRepository repository;
     private final PasswordEncoder encoder;
+    private final Logger LOG = org.slf4j.LoggerFactory.getLogger(UserSettingsService.class);
 
     /**
      * Constructor for the UserSettingsService class.
@@ -56,13 +58,16 @@ public class UserSettingsService {
      * @return ResponseEntity indicating the result of the password change operation.
      */
     public ResponseEntity<?> changePassword(Principal principal, String newPassword) {
+        LOG.info("Changing password for user: {}", principal.getName());
         Optional<UserObject> user = Optional.ofNullable(repository.findByUsername(principal.getName()));
-        if (user.isEmpty() || newPassword == null || newPassword.isEmpty())
+        if (user.isEmpty() || newPassword == null || newPassword.isEmpty()) {
+            LOG.warn("User not found or new password is empty or null");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 
         user.get().setPassword(encoder.encode(newPassword));
         repository.save(user.get());
-
+        LOG.info("Password changed for user: {}", principal.getName());
         return new ResponseEntity<>(redirectionHeader("/logout"), HttpStatus.SEE_OTHER);
     }
 }
