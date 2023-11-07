@@ -22,47 +22,17 @@ import java.security.Principal;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * The ImageUploadAndSaveLinkService class provides methods for uploading images to Cloudinary and saving the link to the database.
- */
 @Service
 public class ImageUploadAndSaveLinkService {
-    private final String RESPONSE_URL_KEY = "secure_url";
     private final Cloudinary cloudinary;
     private final CrudRepository<EventPost, Long> crudRepository;
     private final Logger LOG = LoggerFactory.getLogger(ImageUploadAndSaveLinkService.class);
 
-    /**
-     * Constructor for the ImageUploadAndSaveLinkService class.
-     *
-     * @param cloudinary     The Cloudinary object used for uploading images.
-     * @param crudRepository The CrudRepository used for storing event posts.
-     */
     public ImageUploadAndSaveLinkService(Cloudinary cloudinary, CrudRepository<EventPost, Long> crudRepository) {
         this.cloudinary = cloudinary;
         this.crudRepository = crudRepository;
     }
 
-    /**
-     * Upload an image to Cloudinary and return the response.
-     *
-     * @param file The image file to be uploaded.
-     * @return The response from Cloudinary.
-     * @throws IOException If an error occurs while uploading the image.
-     */
-    public String uploadImageAndGetLink(MultipartFile file) throws IOException {
-        var response = uploadImage(file);
-        return (String) response.get(RESPONSE_URL_KEY);
-    }
-
-    /**
-     * Upload an image to Cloudinary and save the link to the database.
-     *
-     * @param id   The id of the event post to which the image belongs.
-     * @param file The image file to be uploaded.
-     * @return ResponseEntity indicating the result of the operation.
-     * @throws IOException If an error occurs while uploading the image.
-     */
     public ResponseEntity<Void> uploadImageAndSaveLink(long id, MultipartFile file) throws IOException {
 
         var eventPostOptional = crudRepository.findById(id);
@@ -81,15 +51,6 @@ public class ImageUploadAndSaveLinkService {
                 .build();
     }
 
-    /**
-     * Upload an image to Cloudinary and save the link to the database.
-     *
-     * @param id        The id of the event post to which the image belongs.
-     * @param file      The image file to be uploaded.
-     * @param principal The Principal object containing the username of the user making the request.
-     * @return ResponseEntity indicating the result of the operation.
-     * @throws IOException If an error occurs while uploading the image.
-     */
     public ResponseEntity<Void> uploadImageAndSaveLink(long id, MultipartFile file, Principal principal) throws IOException {
 
         var eventPostOptional = crudRepository.findById(id);
@@ -113,14 +74,8 @@ public class ImageUploadAndSaveLinkService {
                 .build();
     }
 
-    /**
-     * Update the event post with the image link.
-     *
-     * @param uploadResult The response from Cloudinary.
-     * @param event        The event post to be updated.
-     */
     private void updateEvent(Map<?, ?> uploadResult, EventPost event) {
-        var url = uploadResult.get(RESPONSE_URL_KEY);
+        var url = uploadResult.get("url");
         LOG.info("Image url: {}", url);
 
         event.setImageLink((String) url);
@@ -128,13 +83,6 @@ public class ImageUploadAndSaveLinkService {
         crudRepository.save(event);
     }
 
-    /**
-     * Upload an image to Cloudinary.
-     *
-     * @param file The image file to be uploaded.
-     * @return The response from Cloudinary.
-     * @throws IOException If an error occurs while uploading the image.
-     */
     private Map uploadImage(MultipartFile file) throws IOException {
         var params = ObjectUtils.asMap(
                 "public_id", "eventmanagement/" + UUID.randomUUID(),
