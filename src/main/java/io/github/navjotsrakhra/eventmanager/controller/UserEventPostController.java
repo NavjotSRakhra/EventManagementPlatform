@@ -12,6 +12,7 @@ import io.github.navjotsrakhra.eventmanager.exception.PostNotFoundException;
 import io.github.navjotsrakhra.eventmanager.service.EventPostAddService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostEditService;
 import io.github.navjotsrakhra.eventmanager.service.EventPostGetService;
+import io.github.navjotsrakhra.eventmanager.service.ImageUploadAndSaveLinkService;
 import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +41,22 @@ import java.util.List;
 public class UserEventPostController {
     private final EventPostGetService eventPostGetService;
     private final EventPostAddService eventPostAddService;
+    private final ImageUploadAndSaveLinkService imageUploadAndSaveLinkService;
     private final EventPostEditService eventPostEditService;
     private final Logger LOG = org.slf4j.LoggerFactory.getLogger(UserEventPostController.class);
 
     /**
      * Constructor for the EventPostController class.
      *
-     * @param eventPostGetService  Service for retrieving event posts.
-     * @param eventPostAddService  Service for adding event posts.
-     * @param eventPostEditService Service of edition event posts.
+     * @param eventPostGetService           Service for retrieving event posts.
+     * @param eventPostAddService           Service for adding event posts.
+     * @param imageUploadAndSaveLinkService Service for uploading images and saving links.
+     * @param eventPostEditService          Service of edition event posts.
      */
-    public UserEventPostController(EventPostGetService eventPostGetService, EventPostAddService eventPostAddService, EventPostEditService eventPostEditService) {
+    public UserEventPostController(EventPostGetService eventPostGetService, EventPostAddService eventPostAddService, ImageUploadAndSaveLinkService imageUploadAndSaveLinkService, EventPostEditService eventPostEditService) {
         this.eventPostGetService = eventPostGetService;
         this.eventPostAddService = eventPostAddService;
+        this.imageUploadAndSaveLinkService = imageUploadAndSaveLinkService;
         this.eventPostEditService = eventPostEditService;
     }
 
@@ -69,18 +75,23 @@ public class UserEventPostController {
     }
 
     /**
-     * Handles POST requests for the "/events/post" URL to add a new event post if the user is the owner of the post.
+     * Handles POST requests for the "/events/post" URL to add a new event post. The postedBy field is set to the
+     * username of the currently logged-in user. You can also upload an image with the post.
      * {@link EventPostDTO} is the exposed version of {@link io.github.navjotsrakhra.eventmanager.dataModel.EventPost}
      *
      * @param newEvent  The EventPostDTO object to be added, validated using @Valid annotation in the {@link EventPostAddService#addEvent(EventPost, Principal)}.
      * @param principal The Principal object is used to retrieve the username of the user making the request.
+     * @param file      The image file to be uploaded.
      * @return ResponseEntity indicating the result of the operation.
      * @throws DateValidationFailedException if date validation fails.
      */
     @PostMapping("/post")
-    public ResponseEntity<?> addEvent(@RequestBody EventPostDTO newEvent, Principal principal) throws DateValidationFailedException {
+    public ResponseEntity<?> addEvent(@RequestBody EventPostDTO newEvent, Principal principal, @RequestPart(required = false) MultipartFile file) throws DateValidationFailedException, IOException {
         LOG.info("Adding new event: {}, user adding: {}", newEvent, principal.getName());
-        return eventPostAddService.addEvent(newEvent.toEventPost(), principal);
+        var newEventPost = newEvent.toEventPost();
+        if (file != null)
+            newEventPost.setImageLink(imageUploadAndSaveLinkService.uploadImageAndGetLink(file));
+        return eventPostAddService.addEvent(newEventPost, principal);
     }
 
     /**
