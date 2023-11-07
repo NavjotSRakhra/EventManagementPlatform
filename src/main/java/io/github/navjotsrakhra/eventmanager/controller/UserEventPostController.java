@@ -64,7 +64,6 @@ public class UserEventPostController {
      */
     @GetMapping
     public ResponseEntity<Page<EventPostDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination, Principal principal) {
-        LOG.info("Getting all events, pageable: {}, user fetching: {}", pagination, principal.getName());
         return eventPostGetService.getPostsWithPaginationOfUser(pagination, principal);
     }
 
