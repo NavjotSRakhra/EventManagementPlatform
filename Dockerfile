@@ -15,6 +15,7 @@ FROM scratch
 WORKDIR /app
 
 COPY --from=build /app/target/app .
+RUN chmod +x app
 
 ENV PORT=8080
 EXPOSE 8080
