@@ -40,9 +40,9 @@ public class EventPostAddService {
     public ResponseEntity<?> addEvent(@Valid EventPost event, Principal principal) {
         event.setPostedBy(principal.getName());
         LOG.info("Adding event: {}, user adding: {}", event, principal.getName());
-        repository.save(event);
+        var response = repository.save(event);
         return ResponseEntity
                 .ok()
-                .build();
+                .body(response.getId());
     }
 }

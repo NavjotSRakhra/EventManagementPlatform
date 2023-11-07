@@ -11,7 +11,7 @@
 
     <groupId>io.github.NavjotSRakhra</groupId>
     <artifactId>EventManager</artifactId>
-    <version>1.0.0.0</version>
+    <version>1.0.2</version>
     <name>EventManager</name>
     <description>EventManager</description>
     <properties>
