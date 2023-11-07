@@ -112,6 +112,7 @@
                         <buildArg>-J-Xmx8g</buildArg>
                         <buildArg>-J-Xms8g</buildArg>
                     </buildArgs>
+                    <imageName>app</imageName>
                 </configuration>
             </plugin>
             <plugin>

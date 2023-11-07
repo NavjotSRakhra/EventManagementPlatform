@@ -14,9 +14,9 @@ FROM scratch
 
 WORKDIR /app
 
-COPY --from=build /app/target/* .
+COPY --from=build /app/target/app .
 
 ENV PORT=8080
 EXPOSE 8080
 
-ENTRYPOINT ["./EventManager"]
+ENTRYPOINT ["./app"]
