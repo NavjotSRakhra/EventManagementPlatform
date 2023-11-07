@@ -9,13 +9,13 @@ COPY mvnw .
 
 RUN chmod +x mvnw
 RUN ./mvnw native:compile -Pnative
+RUN chmod +x target/app
 
-FROM scratch
+FROM ghcr.io/graalvm/graalvm-community:21
 
 WORKDIR /app
 
 COPY --from=build /app/target/app .
-RUN chmod +x app
 
 ENV PORT=8080
 EXPOSE 8080
