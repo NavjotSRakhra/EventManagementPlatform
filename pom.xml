@@ -109,7 +109,8 @@
                 <artifactId>native-maven-plugin</artifactId>
                 <configuration>
                     <buildArgs>
-                        <buildArg>-J-XX:MaxRAMPercentage=13</buildArg>
+                        <buildArg>-J-Xmx8g</buildArg>
+                        <buildArg>-J-Xms8g</buildArg>
                     </buildArgs>
                 </configuration>
             </plugin>
