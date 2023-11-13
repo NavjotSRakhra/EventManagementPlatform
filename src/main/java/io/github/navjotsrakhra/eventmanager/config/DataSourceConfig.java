@@ -24,8 +24,8 @@ public class DataSourceConfig {
     public DataSource getDataSource() {
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url("jdbc:postgresql://dpg-cjcbi9k5kgrc73aacc60-a.singapore-postgres.render.com/posts_and_users");
-        dataSourceBuilder.username("posts_and_users_user");
+        dataSourceBuilder.url(System.getenv("url_db"));
+        dataSourceBuilder.username(System.getenv("username_db"));
         dataSourceBuilder.password(System.getenv("pass_db"));
         return dataSourceBuilder.build();
     }
