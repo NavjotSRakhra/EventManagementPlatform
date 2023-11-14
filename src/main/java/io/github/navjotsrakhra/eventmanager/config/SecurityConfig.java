@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         .requestMatchers("/admin/**", "/actuator/**", "/error").hasAuthority(Role.ADMIN.name())
                         .requestMatchers("/user/events/post").hasAnyAuthority(Role.MANAGEMENT.name(), Role.ADMIN.name())
-                        .requestMatchers("/events/**", "/login", "/register").permitAll()
+                        .requestMatchers("/events/**", "/login", "/register", "/main-H24H4IR3.js", "/polyfills-LZBJRJJE.js", "/styles-BGSM6UNS.css").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                         .loginPage("/login")
