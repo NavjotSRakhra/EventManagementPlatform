@@ -4,6 +4,10 @@ This is the Event Manager Application, a Java-based web application designed for
 provides functionality for creating and viewing event posts, user registration and authentication, and user management
 for administrators.
 
+# Note: To see the demo use the following 
+ - username: admin, password: adminN
+ - The API endpoints can be found at https://eventmanagementplatform.onrender.com/api-info
+
 ## Table of Contents
 
 <!-- TOC -->
