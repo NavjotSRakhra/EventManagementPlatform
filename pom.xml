@@ -8,6 +8,7 @@
         <version>3.2.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>io.github.NavjotSRakhra</groupId>
     <artifactId>EventManager</artifactId>
     <version>1.0.2</version>
@@ -16,6 +17,7 @@
     <properties>
         <java.version>20</java.version>
         <spring-boot-admin.version>3.1.5</spring-boot-admin.version>
+        <mainClass>io.github.navjotsrakhra.eventmanager.EventManagerApplication</mainClass>
     </properties>
     <dependencies>
         <dependency>
@@ -77,7 +79,6 @@
             <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -94,7 +95,6 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http44</artifactId>
@@ -105,18 +105,33 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <configuration>
+                    <buildArgs>
+                        <buildArg>-J-Xmx8g</buildArg>
+                    </buildArgs>
+                    <imageName>app</imageName>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <name>event-manager</name>
+                    </image>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>20</source>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
