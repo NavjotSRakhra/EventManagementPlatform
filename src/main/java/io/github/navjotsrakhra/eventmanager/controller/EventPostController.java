@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 /**
  * The EventPostController class handles HTTP requests related to event posts.
  */
@@ -42,8 +44,8 @@ public class EventPostController {
      * @return ResponseEntity containing a list of EventPostDTO objects.
      */
     @GetMapping
-    public ResponseEntity<Page<EventPostDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination) {
+    public ResponseEntity<Page<EventPostDTO>> getAllEvents(@PageableDefault(size = 5, sort = "postedAt", direction = Sort.Direction.DESC) Pageable pagination, Principal principal) {
         LOG.info("Getting all events, pageable: {}", pagination);
-        return eventPostGetService.getPostsWithPagination(pagination);
+        return eventPostGetService.getPostsWithPagination(pagination, principal);
     }
 }

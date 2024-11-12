@@ -25,4 +25,6 @@ public interface EventPostRepository extends JpaRepository<EventPost, Long> {
      * @return A Page containing all event posted by the specified user.
      */
     Page<EventPost> findEventPostByPostedBy(@NotNull String postedBy, Pageable pageable);
+
+    Page<EventPost> findEventPostById(Pageable pageable, @NotNull Long id);
 }
